@@ -19,3 +19,5 @@ directories:
   "app/models":
     InstanceVariableAssumption:
       enabled: false
+exclude_paths:
+  - config/application.rb
