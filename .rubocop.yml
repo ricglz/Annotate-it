@@ -6,6 +6,9 @@ AllCops:
     - 'bin/**/*'
     - 'config/**/*'
     - 'db/**/*'
+    - 'spec/**/*'
+Style/Documentation:
+  Enabled: false
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 Lint/RaiseException:
