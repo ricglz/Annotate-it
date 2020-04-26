@@ -17,6 +17,7 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'reek', require: false
   gem 'rspec-rails'
