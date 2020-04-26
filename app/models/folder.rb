@@ -2,5 +2,5 @@
 
 class Folder < ApplicationRecord
   belongs_to :user, inverse_of: :folders
-  has_many :notes, dependent: :delete, inverse_of: :folder
+  has_many :notes, dependent: :destroy, inverse_of: :folder
 end
