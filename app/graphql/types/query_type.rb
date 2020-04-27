@@ -4,13 +4,8 @@ module Types
   class QueryType < Types::BaseObject
     description 'The query root of this schema'
 
-    field :user, Types::UserType, null: true do
-      description 'User entity'
-      argument :id, ID, required: true
-    end
-
-    def user(id:)
-      User.find(id)
+    field :viewer, Types::ViewerType, null: false do
+      resolve ->(_, _, ctx) { ctx[:viewer] }
     end
   end
 end
