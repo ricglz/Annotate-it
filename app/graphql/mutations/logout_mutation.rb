@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Mutations
-  LogoutMutation = GraphQL::Relay::Mutation.define do
-    name 'Logout'
+  class LogoutMutation < Mutations::BaseMutation
+    null true
 
-    return_field :user, Types::UserType
+    field :user, Types::UserType, null: true
 
-    resolve lambda { |_, _, ctx|
-      ctx[:warden].logout
-      { user: ctx[:viewer].user }
-    }
+    def resolve
+      context[:warden].logout
+      { user: context[:viewer].user }
+    end
   end
 end

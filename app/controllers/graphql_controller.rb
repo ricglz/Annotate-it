@@ -52,7 +52,7 @@ class GraphqlController < ApplicationController
   end
 
   def viewer
-    warden.user || API::Viewer.new
+    warden.user || Viewer.new
   end
 
   def warden

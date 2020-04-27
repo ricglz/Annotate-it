@@ -1,24 +1,21 @@
 # frozen_string_literal: true
 
 module Mutations
-  LoginMutation = GraphQL::Relay::Mutation.define do
-    # Used to name derived types, eg `"LoginMutation"`:
-    name 'Login'
+  class LoginMutation < Mutations::BaseMutation
+    null true
 
-    # Accessible from `inputs` in the resolve function:
-    input_field :email, !types.String
+    argument :email, String, required: true
 
-    return_field :user, Types::UserType
+    field :user, Types::UserType, null: true
 
-    resolve lambda { |_, inputs, ctx|
-      user = User.find_by(email: inputs[:email])
-
+    def resolve(email)
+      user = User.find_or_create_by(email)
       if user
-        ctx[:warden].set_user(user)
+        context[:warden].set_user(user)
         { user: user }
       else
         GraphQL::ExecutionError.new('Wrong email or password')
       end
-    }
+    end
   end
 end
