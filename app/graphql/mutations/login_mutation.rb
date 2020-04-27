@@ -2,8 +2,6 @@
 
 module Mutations
   class LoginMutation < Mutations::BaseMutation
-    null true
-
     argument :email, String, required: true
 
     field :user, Types::UserType, null: true

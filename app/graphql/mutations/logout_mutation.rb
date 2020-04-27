@@ -2,8 +2,6 @@
 
 module Mutations
   class LogoutMutation < Mutations::BaseMutation
-    null true
-
     field :user, Types::UserType, null: true
 
     def resolve

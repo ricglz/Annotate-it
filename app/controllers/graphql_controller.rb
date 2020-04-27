@@ -51,11 +51,11 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
 
-  def viewer
-    warden.user || Viewer.new
+  def warden
+    @warden ||= request.env['warden']
   end
 
-  def warden
-    request.env['warden']
+  def viewer
+    warden.user
   end
 end
