@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react'
 import environment from '../relay-env';
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ChangeThemeProvider } from '../contexts/ChangeThemeContext';
 import { RelayEnvironmentProvider } from 'relay-hooks';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useTheme } from '../hooks/useTheme';
-import { ChangeThemeProvider } from '../contexts/ChangeThemeContext';
 
 interface Props {
   children: ReactNode
@@ -15,7 +16,9 @@ function Providers({ children }: Props) {
     <ThemeProvider theme={theme}>
       <ChangeThemeProvider value={changeTheme}>
         <RelayEnvironmentProvider environment={environment}>
-          {children}
+          <Router>
+            {children}
+          </Router>
         </RelayEnvironmentProvider>
       </ChangeThemeProvider>
     </ThemeProvider>

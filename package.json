@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@loadable/component": "^5.12.0",
     "@material-ui/core": "^4.9.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -13,7 +14,9 @@
     "@types/react-dom": "^16.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-google-button": "^0.7.1",
     "react-relay": "^9.1.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "relay-hooks": "^3.4.0",
     "typescript": "~3.7.2"
@@ -42,6 +45,7 @@
   },
   "devDependencies": {
     "@types/react-relay": "^7.0.3",
+    "@types/react-router-dom": "^5.1.5",
     "@types/relay-runtime": "^8.0.9",
     "babel-plugin-relay": "^9.1.0",
     "customize-cra": "^0.9.1",

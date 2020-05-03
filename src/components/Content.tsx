@@ -1,30 +1,20 @@
+import Home from './Home';
+import Login from './Login';
 import React from 'react';
-import { graphql } from 'react-relay';
-import { useQuery }  from 'relay-hooks';
+import { Switch, Route } from 'react-router-dom';
 
-const query = graphql`
-  query ContentQuery {
-    viewer {
-      firstName
-    }
-  }
-`
-
-const variables = {};
-
-const options = {
-  networkCacheConfig: undefined,
-}
-
-function Content() {
-  const { props, error } = useQuery(query, variables, options);
-  if(props) {
-    return <div>{props.viewer ? 'Logged' : 'Not logged'}</div>
-  } if(error) {
-    console.log(props);
-    return <div>{error.message}</div>
-  }
-  return <div>Loading...</div>;
-}
+const Content = () => (
+  <Switch>
+    <Route path="/login">
+      <Login />
+    </Route>
+    <Route path="/about-us">
+      <div>About us</div>
+    </Route>
+    <Route path="/">
+      <Home />
+    </Route>
+  </Switch>
+)
 
 export default Content;
