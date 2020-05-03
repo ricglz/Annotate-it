@@ -7,7 +7,7 @@ import {
   Variables
 } from 'relay-runtime';
 
-const url = 'localhost:3000'
+const url = 'http://127.0.0.1:3001/graphql'
 
 function fetchQuery(
   operation: RequestParameters,

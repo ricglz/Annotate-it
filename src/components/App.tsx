@@ -1,10 +1,11 @@
 import React from 'react';
+import Content from './Content';
 import Providers from './Providers';
 
 function App() {
   return (
     <Providers>
-      Hello world!
+      <Content />
     </Providers>
   );
 }
