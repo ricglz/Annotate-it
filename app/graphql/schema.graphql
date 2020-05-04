@@ -25,7 +25,7 @@ type LoginMutationPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  user: User
+  viewer: User
 }
 
 """
