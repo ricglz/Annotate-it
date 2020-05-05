@@ -4,8 +4,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from '../config/firebase';
-import commitLoginMutation from '../mutations/LogInMutation';
-// import { useHistory } from "react-router-dom";
+import useMutation from '../mutations/LogInMutation';
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -18,19 +17,14 @@ const uiConfig = {
 };
 
 export default function Login() {
-  // const history = useHistory()
-
-  const onSuccess = React.useCallback(() => {
-    // history.push('/')
-  }, []);
+  const [commit] = useMutation();
   const onAuth = React.useCallback((user) => {
     if(!user) {
       return;
     }
-    const { email, uid } = user;
-    commitLoginMutation(email, onSuccess)
-    console.log(uid);
-  }, [onSuccess]);
+    const { email, password } = user;
+    commit({ variables: { email, password } });
+  }, [commit]);
 
   React.useEffect(() => {
     const unregisterAuthObserver =
