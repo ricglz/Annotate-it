@@ -1,19 +1,20 @@
 import React from 'react';
+import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
-import { useQuery } from 'relay-hooks';
 import { useHistory } from "react-router-dom";
+import { useQuery } from 'relay-hooks';
 
 const query = graphql`
-  query HomeQuery {
-    viewer {
+  query HomeQuery($email: String!, $password: String!) {
+    viewer(email: $email, password: $password) {
       id
-      firstName
     }
   }
 `
 
 function Home() {
-  const { props, error } = useQuery(query);
+  const { user } = React.useContext(UserContext);
+  const { props, error } = useQuery(query, user);
   const history = useHistory()
 
   React.useEffect(() => {
@@ -27,10 +28,7 @@ function Home() {
   }, [history, props]);
 
   if(props) {
-    const { viewer } = props;
-    if(viewer) {
-      return <div>{ viewer.firstName }</div>;
-    }
+    return <div>{ props.viewer.id }</div>;
   }
   if(error) {
     return <div>{ error.message }</div>;

@@ -2,11 +2,13 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type HomeQueryVariables = {};
+export type HomeQueryVariables = {
+    email: string;
+    password: string;
+};
 export type HomeQueryResponse = {
     readonly viewer: {
         readonly id: string;
-        readonly firstName: string | null;
     } | null;
 };
 export type HomeQuery = {
@@ -17,10 +19,12 @@ export type HomeQuery = {
 
 
 /*
-query HomeQuery {
-  viewer {
+query HomeQuery(
+  $email: String!
+  $password: String!
+) {
+  viewer(email: $email, password: $password) {
     id
-    firstName
   }
 }
 */
@@ -28,8 +32,33 @@ query HomeQuery {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "email",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "password",
+    "type": "String!"
+  }
+],
+v1 = [
+  {
     "alias": null,
-    "args": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "email",
+        "variableName": "email"
+      },
+      {
+        "kind": "Variable",
+        "name": "password",
+        "variableName": "password"
+      }
+    ],
     "concreteType": "User",
     "kind": "LinkedField",
     "name": "viewer",
@@ -41,13 +70,6 @@ var v0 = [
         "kind": "ScalarField",
         "name": "id",
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "firstName",
-        "storageKey": null
       }
     ],
     "storageKey": null
@@ -55,28 +77,28 @@ var v0 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "HomeQuery",
-    "selections": (v0/*: any*/),
+    "selections": (v1/*: any*/),
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "HomeQuery",
-    "selections": (v0/*: any*/)
+    "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
     "name": "HomeQuery",
     "operationKind": "query",
-    "text": "query HomeQuery {\n  viewer {\n    id\n    firstName\n  }\n}\n"
+    "text": "query HomeQuery(\n  $email: String!\n  $password: String!\n) {\n  viewer(email: $email, password: $password) {\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a50936ae43880a486147b6638680ac15';
+(node as any).hash = '11662492eb1ac040b6c0ca88ca2764e5';
 export default node;

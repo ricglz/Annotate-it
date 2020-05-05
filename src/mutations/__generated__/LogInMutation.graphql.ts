@@ -4,12 +4,13 @@
 import { ConcreteRequest } from "relay-runtime";
 export type LogInMutationVariables = {
     email: string;
+    password: string;
+    name?: string | null;
 };
 export type LogInMutationResponse = {
     readonly loginMutation: {
         readonly viewer: {
             readonly id: string;
-            readonly email: string | null;
         } | null;
     };
 };
@@ -23,11 +24,12 @@ export type LogInMutation = {
 /*
 mutation LogInMutation(
   $email: String!
+  $password: String!
+  $name: String
 ) {
-  loginMutation(input: {email: $email}) {
+  loginMutation(input: {email: $email, password: $password, name: $name}) {
     viewer {
       id
-      email
     }
   }
 }
@@ -40,6 +42,18 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "email",
     "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "password",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "name",
+    "type": "String"
   }
 ],
 v1 = [
@@ -52,6 +66,16 @@ v1 = [
             "kind": "Variable",
             "name": "email",
             "variableName": "email"
+          },
+          {
+            "kind": "Variable",
+            "name": "name",
+            "variableName": "name"
+          },
+          {
+            "kind": "Variable",
+            "name": "password",
+            "variableName": "password"
           }
         ],
         "kind": "ObjectValue",
@@ -76,13 +100,6 @@ v1 = [
             "args": null,
             "kind": "ScalarField",
             "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "email",
             "storageKey": null
           }
         ],
@@ -113,9 +130,9 @@ return {
     "metadata": {},
     "name": "LogInMutation",
     "operationKind": "mutation",
-    "text": "mutation LogInMutation(\n  $email: String!\n) {\n  loginMutation(input: {email: $email}) {\n    viewer {\n      id\n      email\n    }\n  }\n}\n"
+    "text": "mutation LogInMutation(\n  $email: String!\n  $password: String!\n  $name: String\n) {\n  loginMutation(input: {email: $email, password: $password, name: $name}) {\n    viewer {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ccdea04843d643f24d5b830c21fad13f';
+(node as any).hash = '1f25a07576b8ceb934636fac4fb5a879';
 export default node;
