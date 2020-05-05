@@ -3,17 +3,20 @@
 module Mutations
   class LoginMutation < Mutations::BaseMutation
     argument :email, String, required: true
+    argument :password, String, required: true
+    argument :name, String, required: false
 
-    field :user, Types::UserType, null: true
+    field :viewer, Types::UserType, null: true
 
-    def resolve(email)
-      user = User.find_or_create_by(email)
-      if user
-        context[:warden].set_user(user)
-        { user: user }
-      else
-        GraphQL::ExecutionError.new('Wrong email or password')
+    def resolve(email, password, name)
+      name ||= ''
+      viewer = User.find_by(email: email)
+      viewer ||= User.create(email: email, password: password, name: name)
+      unless viewer.authenticate(password)
+        raise GraphQL::ExecutionError, 'Incorrect password'
       end
+
+      { viewer: viewer }
     end
   end
 end

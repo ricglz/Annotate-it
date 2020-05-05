@@ -7,6 +7,7 @@ class GraphqlController < ApplicationController
   # protect_from_forgery with: :null_session
 
   def execute
+    logger.info request.env['warden']
     render json: result
   rescue => e
     raise e unless Rails.env.development?
@@ -26,7 +27,6 @@ class GraphqlController < ApplicationController
     )
   end
 
-  # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
     case ambiguous_param
     when String
@@ -49,13 +49,5 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
-  end
-
-  def warden
-    @warden ||= request.env['warden']
-  end
-
-  def viewer
-    warden.user
   end
 end
