@@ -14,7 +14,6 @@ gem 'puma', '~> 4.1'
 gem 'rack-cors'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'warden'
 
 group :development, :test do
   gem 'brakeman', require: false

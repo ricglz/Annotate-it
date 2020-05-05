@@ -198,8 +198,6 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
-    warden (1.2.8)
-      rack (>= 2.0.6)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -229,7 +227,6 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   tzinfo-data
-  warden
 
 RUBY VERSION
    ruby 2.6.5p114

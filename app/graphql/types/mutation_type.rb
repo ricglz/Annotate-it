@@ -5,9 +5,5 @@ module Types
     field :login_mutation,
           mutation: Mutations::LoginMutation,
           null: false
-
-    field :logout_mutation,
-          mutation: Mutations::LogoutMutation,
-          null: false
   end
 end
