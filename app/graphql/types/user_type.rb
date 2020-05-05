@@ -5,15 +5,14 @@ module Types
     description 'A user'
 
     field :id, ID, null: false
-    field :first_name, String, null: true
-    field :last_name, String, null: true
+    field :name, String, null: true
     field :email, String, null: true
 
-    field :notes, [Types::NoteType],
+    field :notes, Types::NoteType.connection_type,
           null: false, description: 'Notes made by the user'
-    field :folders, [Types::FolderType],
+    field :folders, Types::FolderType.connection_type,
           null: false, description: 'Folders made by the user'
-    field :Tags, [Types::TagType],
+    field :tags, Types::TagType.connection_type,
           null: false, description: 'Tags made by the user'
   end
 end
