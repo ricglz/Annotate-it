@@ -3,7 +3,7 @@ import { useLocalStorage } from './generalHooks';
 
 export interface User {
   email: string;
-  uid: string;
+  password: string;
 }
 
 export interface useUserCallback {
@@ -13,7 +13,7 @@ export interface useUserCallback {
 
 export const useUser = () : useUserCallback => {
   const [storedValue, setStoredValue] =
-    useLocalStorage('theme', JSON.stringify({}));
+    useLocalStorage('user', JSON.stringify({}));
   const [user, setUser] = useState(JSON.parse(storedValue));
   const changeUser = useCallback((user: User) => {
     setUser(user);

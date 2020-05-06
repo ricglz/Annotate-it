@@ -3,13 +3,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from '../config/firebase';
-import useMutation from '../mutations/LogInMutation';
+import { auth } from '../config/firebase';
+import useLogin from '../hooks/useLogin';
 
 const uiConfig = {
   signInFlow: 'popup',
   signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    auth.GoogleAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
     signInSuccessWithAuthResult: () => false
@@ -17,18 +17,10 @@ const uiConfig = {
 };
 
 export default function Login() {
-  const [commit] = useMutation();
-  const onAuth = React.useCallback((user) => {
-    if(!user) {
-      return;
-    }
-    const { email, password } = user;
-    commit({ variables: { email, password } });
-  }, [commit]);
-
+  const onAuth = useLogin();
   React.useEffect(() => {
     const unregisterAuthObserver =
-      firebase.auth().onAuthStateChanged(onAuth);
+      auth().onAuthStateChanged(onAuth);
     return () => unregisterAuthObserver();
   }, [onAuth]);
   return (
@@ -37,7 +29,7 @@ export default function Login() {
       <CardContent>
         <StyledFirebaseAuth
           uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
+          firebaseAuth={auth()}
         />
       </CardContent>
     </Card>

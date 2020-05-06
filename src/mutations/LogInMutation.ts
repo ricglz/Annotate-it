@@ -1,8 +1,6 @@
-import firebase from '../config/firebase';
-import { UserContext } from '../contexts/UserContext';
-import { graphql } from 'react-relay';
-import { useContext } from 'react';
-import { useMutation } from 'relay-hooks';
+import { LogInMutationVariables } from './__generated__/LogInMutation.graphql';
+import { commitMutation, graphql } from 'react-relay';
+import environment from '../config/relay-env';
 
 const mutation = graphql`
   mutation LogInMutation($email: String!, $password: String!, $name: String) {
@@ -18,7 +16,13 @@ const mutation = graphql`
   }
 `
 
-export default function useLogInMutation() {
+export default function LogInMutation(
+  variables: LogInMutationVariables, onCompleted: () => void
+) {
+  commitMutation(environment, { mutation, variables, onCompleted });
+};
+
+/* export default function useLogInMutation() {
   const { changeUser } = useContext(UserContext);
   const onCompleted = () => {
     const user = firebase.auth().currentUser;
@@ -32,4 +36,4 @@ export default function useLogInMutation() {
     changeUser({ email, uid });
   }
   return useMutation(mutation, { onCompleted });
-}
+} */
