@@ -9,9 +9,9 @@ module Types
       argument :password, String, required: true
     end
 
-    def viewer(email, password)
-      user = User.find_by(email: email)
-      user.authenticate(password) ? user : nil
+    def viewer(**args)
+      user = User.find_by(email: args[:email])
+      user.authenticate(args[:password]) ? user : nil
     end
   end
 end

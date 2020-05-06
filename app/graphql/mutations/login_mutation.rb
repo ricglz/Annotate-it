@@ -8,11 +8,10 @@ module Mutations
 
     field :viewer, Types::UserType, null: true
 
-    def resolve(email, password, name)
-      name ||= ''
-      viewer = User.find_by(email: email)
-      viewer ||= User.create(email: email, password: password, name: name)
-      unless viewer.authenticate(password)
+    def resolve(**args)
+      viewer = User.find_by(email: args[:email])
+      viewer ||= User.create(args)
+      unless viewer.authenticate(args[:password])
         raise GraphQL::ExecutionError, 'Incorrect password'
       end
 

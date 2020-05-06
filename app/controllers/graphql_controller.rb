@@ -7,7 +7,6 @@ class GraphqlController < ApplicationController
   # protect_from_forgery with: :null_session
 
   def execute
-    logger.info request.env['warden']
     render json: result
   rescue => e
     raise e unless Rails.env.development?
@@ -18,7 +17,7 @@ class GraphqlController < ApplicationController
   private
 
   def result
-    context = { warden: warden, viewer: viewer }
+    context = {}
     ProjectBackendSchema.execute(
       params[:query],
       variables: ensure_hash(params[:variables]),
