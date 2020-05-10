@@ -6,16 +6,18 @@ export interface User {
   password: string;
 }
 
+type GenericUser = User | {}
+
 export interface useUserCallback {
-  user: User | {};
-  changeUser: (user: User) => void;
+  user: GenericUser;
+  changeUser: (user: GenericUser) => void;
 }
 
-export const useUser = () : useUserCallback => {
+export const useUser = (): useUserCallback => {
   const [storedValue, setStoredValue] =
     useLocalStorage('user', JSON.stringify({}));
   const [user, setUser] = useState(JSON.parse(storedValue));
-  const changeUser = useCallback((user: User) => {
+  const changeUser = useCallback((user: GenericUser) => {
     setUser(user);
     setStoredValue(JSON.stringify(user));
   }, [setStoredValue]);

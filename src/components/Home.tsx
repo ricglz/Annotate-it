@@ -3,11 +3,12 @@ import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
 import { useHistory } from "react-router-dom";
 import { useQuery } from 'relay-hooks';
+import HomeContent from './HomeContent';
 
 const query = graphql`
   query HomeQuery($email: String!, $password: String!) {
     viewer(email: $email, password: $password) {
-      id
+      ...HomeContent_viewer
     }
   }
 `
@@ -28,7 +29,7 @@ function Home() {
   }, [history, props]);
 
   if(props) {
-    return <div>{ props.viewer.id }</div>;
+    return <HomeContent viewer={props.viewer} />
   }
   if(error) {
     return <div>{ error.message }</div>;

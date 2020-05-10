@@ -9,17 +9,20 @@ export default function useLogin() {
   const history = useHistory();
   const onCompleted = useCallback(() => {
     const user = auth().currentUser;
-    if(!user) {
+    if (!user) {
       return;
     }
     const { email, uid } = user;
-    if(!email) {
+    if (!email) {
       return;
     }
     changeUser({ email, password: uid })
     history.push('/')
   }, [changeUser, history])
   const onAuth = useCallback((user) => {
+    if (!user) {
+      return;
+    }
     const { email, uid, displayName } = user;
     commit({ email, password: uid, name: displayName }, onCompleted)
   }, [onCompleted]);

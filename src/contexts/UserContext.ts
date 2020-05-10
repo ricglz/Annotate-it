@@ -1,9 +1,9 @@
 import { createContext } from 'react'
 import { useUserCallback, User } from '../hooks/useUser';
 
-const defaultContext : useUserCallback = {
+const defaultContext: useUserCallback = {
   user: {},
-  changeUser: (user: User) => {}
+  changeUser: (user: User | {}) => { }
 }
 
 export const UserContext = createContext(defaultContext);
