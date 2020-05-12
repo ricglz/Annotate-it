@@ -3,7 +3,6 @@ import { auth } from '../config/firebase';
 import { useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-
 function useLogout(callback: () => void) {
   const { changeUser } = useContext(UserContext);
   const history = useHistory();

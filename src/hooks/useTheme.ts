@@ -1,17 +1,17 @@
 import amber from '@material-ui/core/colors/amber';
+import createMuiTheme, { Theme } from '@material-ui/core/styles/createMuiTheme';
 import lightBlue from '@material-ui/core/colors/lightBlue';
-import { createMuiTheme, Theme } from '@material-ui/core/styles';
-import { useState, useCallback } from 'react';
 import { useLocalStorage } from './generalHooks';
+import { useState, useCallback } from 'react';
 
-export const lightTheme = createMuiTheme({
+const lightTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: lightBlue,
   }
 });
 
-export const darkTheme = createMuiTheme({
+const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: amber,
@@ -23,7 +23,7 @@ function changeBodyBgColor(theme: Theme) {
   body.style.setProperty('background-color', theme.palette.background.default)
 }
 
-export const useTheme = () : [Theme, () => void] => {
+export const useTheme = (): [Theme, () => void] => {
   const [storedValue, setStoredValue] = useLocalStorage('theme', 'light');
   const preferredTheme = storedValue === 'light' ? lightTheme : darkTheme;
   const [theme, setTheme] = useState(preferredTheme);
@@ -34,7 +34,7 @@ export const useTheme = () : [Theme, () => void] => {
       changeBodyBgColor(newTheme);
       return newTheme;
     });
-    setStoredValue( prevValue => prevValue === 'light' ? 'dark' : 'light' );
+    setStoredValue(prevValue => prevValue === 'light' ? 'dark' : 'light');
   }, [setStoredValue]);
   return [theme, changeTheme];
 }

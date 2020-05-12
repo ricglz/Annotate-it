@@ -1,10 +1,11 @@
+import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { ReactNode } from 'react'
 import environment from '../config/relay-env';
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ChangeThemeProvider } from '../contexts/ChangeThemeContext';
-import { UserProvider } from '../contexts/UserContext';
 import { RelayEnvironmentProvider } from 'relay-hooks';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { UserProvider } from '../contexts/UserContext';
 import { useTheme } from '../hooks/useTheme';
 import { useUser } from '../hooks/useUser';
 
@@ -17,15 +18,16 @@ function Providers({ children }: Props) {
   const currentState = useUser();
   return (
     <ThemeProvider theme={theme}>
-      <RelayEnvironmentProvider environment={environment}>
-        <ChangeThemeProvider value={changeTheme}>
+      <CssBaseline />
+      <ChangeThemeProvider value={changeTheme}>
+        <RelayEnvironmentProvider environment={environment}>
           <UserProvider value={currentState}>
             <Router>
               {children}
             </Router>
           </UserProvider>
-        </ChangeThemeProvider>
-      </RelayEnvironmentProvider>
+        </RelayEnvironmentProvider>
+      </ChangeThemeProvider>
     </ThemeProvider>
   )
 }
