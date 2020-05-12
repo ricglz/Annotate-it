@@ -5,7 +5,9 @@ module Types
     description 'A note'
 
     field :content, String, null: true
+    field :id, ID, null: false
     field :folder, Types::FolderType, null: true
-    field :tags, [Types::TagType], null: false
+    field :tags, Types::TagType.connection_type,
+          null: false, description: 'Tags that are representing this note'
   end
 end
