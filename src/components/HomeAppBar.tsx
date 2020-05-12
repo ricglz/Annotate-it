@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       color: theme.palette.text.primary,
+      zIndex: theme.zIndex.drawer + 1,
     },
     title: {
       flexGrow: 1,

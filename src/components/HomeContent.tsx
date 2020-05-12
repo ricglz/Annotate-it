@@ -1,4 +1,5 @@
 import HomeAppBar from './HomeAppBar';
+import HomeDrawer from './HomeDrawer';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { HomeContent_viewer } from './__generated__/HomeContent_viewer.graphql'
@@ -20,6 +21,7 @@ const HomeContent = (props: Props) => {
   return (
     <>
       <HomeAppBar />
+      <HomeDrawer />
       <Typography variant="h5">{viewer.id}</Typography>
     </>
   );
