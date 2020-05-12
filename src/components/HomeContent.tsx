@@ -9,6 +9,7 @@ import { useFragment, KeyType } from 'relay-hooks';
 const fragment = graphql`
   fragment HomeContent_viewer on User {
     id
+    ...HomeDrawer_viewer
   }
 `
 
@@ -21,7 +22,7 @@ const HomeContent = (props: Props) => {
   return (
     <>
       <HomeAppBar />
-      <HomeDrawer />
+      <HomeDrawer viewer={viewer} />
       <Typography variant="h5">{viewer.id}</Typography>
     </>
   );
