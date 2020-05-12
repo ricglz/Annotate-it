@@ -8,7 +8,7 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const NotesDetails = () => {
   const { noteId } = useParams();
-  return <div>Folder: {noteId}</div>;
+  return <div>Nota: {noteId}</div>;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,11 +26,11 @@ const HomeMain = () => {
     <main className={main}>
       <Toolbar />
       <Switch>
+        <Route path="/notes/:noteId">
+          <NotesDetails />
+        </Route>
         <Route path="/:folderId">
           <FolderDetails />
-        </Route>
-        <Route path="/notes/noteId">
-          <NotesDetails />
         </Route>
       </Switch>
     </main>

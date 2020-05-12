@@ -8,10 +8,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { NavLink } from 'react-router-dom';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { graphql } from 'react-relay';
 import { usePagination } from 'relay-hooks';
-import { Link } from 'react-router-dom';
 
 const fragment = graphql`
   fragment HomeDrawer_viewer on User
@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       color: theme.palette.text.primary,
     },
+    selectedLink: {
+      color: theme.palette.primary.light
+    },
     paper: {
       width: 240,
     },
@@ -69,11 +72,11 @@ const HomeDrawer = (props: any) => {
           <Divider className={classes.divider} />
           <List aria-label="folders">
             {edges.map(({ node }: any) => (
-              <Link key={node.id} to={`/${node.id}`} className={classes.link}>
+              <NavLink key={node.id} to={`/${node.id}`} className={classes.link} activeClassName={classes.selectedLink}>
                 <ListItem button>
                   <ListItemText primary={node.name} />
                 </ListItem>
-              </Link>
+              </NavLink>
             ))}
           </List>
         </div>

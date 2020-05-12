@@ -2,6 +2,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Link } from 'react-router-dom';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { graphql } from 'react-relay';
 import { usePagination } from 'relay-hooks';
 
@@ -17,7 +22,7 @@ const fragment = graphql`
       edges {
         node {
           id
-          content
+          title
           updatedAt
         }
       }
@@ -25,7 +30,17 @@ const fragment = graphql`
   }
 `
 
+const useStyles = makeStyles((theme: Theme ) => (
+  createStyles({
+    link: {
+      color: theme.palette.text.primary,
+      textDecoration: 'none'
+    }
+  })
+));
+
 const FolderNotes = (props: any) => {
+  let classes = useStyles();
   let [folder] = usePagination(fragment, props.folder)
   folder = folder || {};
   const { notes = {} } = folder;
@@ -33,12 +48,14 @@ const FolderNotes = (props: any) => {
   return (
     <List>
       {edges.map(({ node }: any) => (
-        <ListItem key={node.id} button>
-          <ListItemText
-            primary={node.id}
-            secondary={new Date(node.updatedAt).toLocaleDateString()}
-          />
-        </ListItem>
+        <Link className={classes.link} key={node.id} to={`/notes/${node.id}`}>
+          <ListItem button>
+            <ListItemText
+              primary={<ReactMarkdown unwrapDisallowed source={node.title} />}
+              secondary={new Date(node.updatedAt).toLocaleDateString()}
+            />
+          </ListItem>
+        </Link>
       ))}
     </List>
   )
