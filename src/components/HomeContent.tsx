@@ -1,7 +1,7 @@
 import HomeAppBar from './HomeAppBar';
 import HomeDrawer from './HomeDrawer';
+import HomeMain from './HomeMain';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { HomeContent_viewer } from './__generated__/HomeContent_viewer.graphql'
 import { graphql } from 'react-relay';
 import { useFragment, KeyType } from 'relay-hooks';
@@ -23,7 +23,7 @@ const HomeContent = (props: Props) => {
     <>
       <HomeAppBar />
       <HomeDrawer viewer={viewer} />
-      <Typography variant="h5">{viewer.id}</Typography>
+      <HomeMain />
     </>
   );
 }

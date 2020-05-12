@@ -17,15 +17,13 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
       color: theme.palette.text.primary,
       zIndex: theme.zIndex.drawer + 1,
+      backgroundColor: theme.palette.background.default,
+      maxHeight: 64,
     },
     title: {
       flexGrow: 1,
-    },
-    toolbar: {
-      backgroundColor: theme.palette.background.default,
     },
   }),
 );
@@ -36,8 +34,8 @@ const HomeAppBar = () => {
   const [menuEl, onMenuOpen, onMenuClose] = useHandleAnchorEl();
   const logout = useLogout(onMenuClose);
   return (
-    <AppBar position="static" className={classes.root}>
-      <Toolbar className={classes.toolbar}>
+    <AppBar position="fixed" className={classes.root}>
+      <Toolbar>
         <Typography variant="h6" className={classes.title}>
           Annotate it!
         </Typography>

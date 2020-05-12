@@ -11,6 +11,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { graphql } from 'react-relay';
 import { usePagination } from 'relay-hooks';
+import { Link } from 'react-router-dom';
 
 const fragment = graphql`
   fragment HomeDrawer_viewer on User
@@ -36,13 +37,16 @@ const useStyles = makeStyles((theme: Theme) =>
     divider: {
       marginTop: '0.5rem',
     },
-    drawer: {
+    root: {
       width: 240,
       flexShrink: 0,
     },
     drawerContainer: {
       padding: '1rem',
       overflow: 'auto',
+    },
+    link: {
+      color: theme.palette.text.primary,
     },
     paper: {
       width: 240,
@@ -57,17 +61,19 @@ const HomeDrawer = (props: any) => {
   const { folders = {} } = viewer
   const { edges = [] } = folders
   return (
-    <nav>
-      <Drawer className={classes.drawer} variant='permanent'>
+    <nav className={classes.root}>
+      <Drawer variant='permanent' classes={{paper: classes.paper}}>
         <Toolbar />
         <div className={classes.drawerContainer}>
           <Typography variant='h4'>Folders</Typography>
           <Divider className={classes.divider} />
-          <List>
+          <List aria-label="folders">
             {edges.map(({ node }: any) => (
-              <ListItem button key={node.id}>
-                <ListItemText primary={node.name} />
-              </ListItem>
+              <Link key={node.id} to={`/${node.id}`} className={classes.link}>
+                <ListItem button>
+                  <ListItemText primary={node.name} />
+                </ListItem>
+              </Link>
             ))}
           </List>
         </div>
