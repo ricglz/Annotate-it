@@ -1,10 +1,11 @@
 import Divider from '@material-ui/core/Divider';
+import NotesEditor from './NotesEditor';
+import NotesRenderer from './NotesRenderer';
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import Typography from '@material-ui/core/Typography';
+import { Route, useParams, useRouteMatch } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
-import { useParams } from 'react-router-dom';
 import { useQuery } from 'relay-hooks';
 
 const query = graphql`
@@ -25,6 +26,7 @@ const query = graphql`
 const NotesDetails = () => {
   const { user } = React.useContext(UserContext);
   const { noteId } = useParams();
+  const { url } = useRouteMatch();
   const { props, error } = useQuery(query, { ...user, noteId });
   if(props) {
     const { viewer = {} } = props;
@@ -33,7 +35,12 @@ const NotesDetails = () => {
       <>
         <Typography variant="h4">Note</Typography>
         <Divider />
-        <ReactMarkdown source={note.content}/>
+        <Route path={`${url}/edit`}>
+          <NotesEditor content={note.content} />
+        </Route>
+        <Route exact path={url}>
+          <NotesRenderer content={note.content} />
+        </Route>
       </>
     );
   }

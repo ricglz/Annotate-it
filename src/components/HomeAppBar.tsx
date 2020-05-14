@@ -17,10 +17,10 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      color: theme.palette.text.primary,
-      zIndex: theme.zIndex.drawer + 1,
       backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
       maxHeight: 64,
+      zIndex: theme.zIndex.drawer + 1,
     },
     title: {
       flexGrow: 1,
@@ -41,34 +41,28 @@ const HomeAppBar = () => {
         </Typography>
         <IconButton
           aria-label="change theme button"
-          onClick={changeTheme}
           color="primary"
+          onClick={changeTheme}
         >
           <WbSunnyIcon />
         </IconButton>
         <IconButton
-          aria-label="account of current user"
           aria-controls="user-appbar-menu"
           aria-haspopup="true"
-          onClick={onMenuOpen}
+          aria-label="account of current user"
           color="primary"
+          onClick={onMenuOpen}
         >
           <AccountCircle />
         </IconButton>
         <Menu
-          id="user-appbar-menu"
           anchorEl={menuEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          id="user-appbar-menu"
           keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(menuEl)}
           onClose={onMenuClose}
+          open={Boolean(menuEl)}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         >
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
