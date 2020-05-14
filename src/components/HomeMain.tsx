@@ -26,10 +26,10 @@ const HomeMain = () => {
     <main className={main}>
       <Toolbar />
       <Switch>
-        <Route path="/notes/:noteId">
+        <Route path="/folder/:folderId/notes/:noteId">
           <NotesDetails />
         </Route>
-        <Route path="/:folderId">
+        <Route path="/folder/:folderId">
           <FolderDetails />
         </Route>
       </Switch>

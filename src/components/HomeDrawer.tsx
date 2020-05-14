@@ -72,7 +72,7 @@ const HomeDrawer = (props: any) => {
           <Divider className={classes.divider} />
           <List aria-label="folders">
             {edges.map(({ node }: any) => (
-              <NavLink key={node.id} to={`/${node.id}`} className={classes.link} activeClassName={classes.selectedLink}>
+              <NavLink key={node.id} to={`/folder/${node.id}`} className={classes.link} activeClassName={classes.selectedLink}>
                 <ListItem button>
                   <ListItemText primary={node.name} />
                 </ListItem>

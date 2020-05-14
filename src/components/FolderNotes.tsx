@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { graphql } from 'react-relay';
 import { usePagination } from 'relay-hooks';
+import { useParams } from 'react-router-dom';
 
 const fragment = graphql`
   fragment FolderNotes_folder on Folder
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme: Theme ) => (
 
 const FolderNotes = (props: any) => {
   let classes = useStyles();
+  const { url } = useParams();
   let [folder] = usePagination(fragment, props.folder)
   folder = folder || {};
   const { notes = {} } = folder;
@@ -48,7 +50,7 @@ const FolderNotes = (props: any) => {
   return (
     <List>
       {edges.map(({ node }: any) => (
-        <Link className={classes.link} key={node.id} to={`/notes/${node.id}`}>
+        <Link className={classes.link} key={node.id} to={`${url}/notes/${node.id}`}>
           <ListItem button>
             <ListItemText
               primary={<ReactMarkdown unwrapDisallowed source={node.title} />}
