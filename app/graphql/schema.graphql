@@ -131,6 +131,7 @@ type Note {
     """
     last: Int
   ): TagConnection!
+  title: String
   updatedAt: ISO8601DateTime!
 }
 
