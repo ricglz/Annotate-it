@@ -26,7 +26,7 @@ const query = graphql`
 const NotesDetails = () => {
   const { user } = React.useContext(UserContext);
   const { noteId } = useParams();
-  const { url } = useRouteMatch();
+  const { path } = useRouteMatch();
   const { props, error } = useQuery(query, { ...user, noteId });
   if(props) {
     const { viewer = {} } = props;
@@ -35,10 +35,10 @@ const NotesDetails = () => {
       <>
         <Typography variant="h4">Note</Typography>
         <Divider />
-        <Route path={`${url}/edit`}>
+        <Route path={`${path}/edit`}>
           <NotesEditor content={note.content} />
         </Route>
-        <Route exact path={url}>
+        <Route exact path={path}>
           <NotesRenderer content={note.content} />
         </Route>
       </>

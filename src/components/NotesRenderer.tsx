@@ -1,7 +1,9 @@
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import NotesButtonsRow from './NotesButtonsRow';
+import PencilIcon from '@material-ui/icons/Edit';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import PencilIcon from '@material-ui/icons/Edit';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
 interface Props {
@@ -16,14 +18,18 @@ const NotesRenderer = ({ content }: Props) => {
   }, [url, history]);
   return (
     <>
-      <Button
-        onClick={onClickEdit}
-        size="small"
-        startIcon={<PencilIcon />}
-        variant="contained"
-      >
-        Edit Note
-      </Button>
+      <NotesButtonsRow>
+        <Grid item>
+          <Button
+            onClick={onClickEdit}
+            size="small"
+            startIcon={<PencilIcon />}
+            variant="contained"
+          >
+            Edit Note
+          </Button>
+        </Grid>
+      </NotesButtonsRow>
       <ReactMarkdown source={content} />
     </>
   );
