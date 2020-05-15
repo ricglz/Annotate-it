@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 module Mutations
-  class UpdateNoteContent < BaseMutation
-    field :updated_note, Types::NoteType, null: false
+  class DeleteNote < BaseMutation
+    field :deleted_note_id, ID, null: false
 
     argument :email, String, required: true
     argument :note_id, ID, required: true
-    argument :content, String, required: true
 
     def resolve(arguments)
       user = User.find_by(email: arguments[:email])
@@ -17,8 +16,8 @@ module Mutations
         raise GraphQL::ExecutionError, "This note doesn't belong to the user"
       end
 
-      note.update(content: arguments[:content])
-      { updated_note: note }
+      note.delete
+      { deleted_note_id: note.id }
     end
   end
 end
