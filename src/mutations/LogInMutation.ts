@@ -21,19 +21,3 @@ export default function LogInMutation(
 ) {
   commitMutation(environment, { mutation, variables, onCompleted });
 };
-
-/* export default function useLogInMutation() {
-  const { changeUser } = useContext(UserContext);
-  const onCompleted = () => {
-    const user = firebase.auth().currentUser;
-    if(!user) {
-      return;
-    }
-    const { email, uid } = user;
-    if(!email) {
-      return;
-    }
-    changeUser({ email, uid });
-  }
-  return useMutation(mutation, { onCompleted });
-} */

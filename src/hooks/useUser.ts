@@ -4,6 +4,7 @@ import { useLocalStorage } from './generalHooks';
 export interface User {
   email: string;
   password: string;
+  id: string;
 }
 
 type GenericUser = User | {}
