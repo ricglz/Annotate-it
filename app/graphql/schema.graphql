@@ -29,9 +29,9 @@ input CreateNoteInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+  content: String!
   email: String!
-  name: String!
-  noteId: ID!
+  folderId: ID!
 }
 
 """
