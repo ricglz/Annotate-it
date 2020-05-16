@@ -3,8 +3,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { auth } from '../config/firebase';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import useLogin from '../hooks/useLogin';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { auth } from '../config/firebase';
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -16,7 +19,26 @@ const uiConfig = {
   }
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'center',
+      margin: '2rem',
+      padding: '2rem',
+    },
+    card: {
+      minWidth: '80%',
+    },
+    cardHeader: {
+      textAlign: 'center'
+    }
+  }),
+);
+
 export default function Login() {
+  const { root, card, cardHeader } = useStyles();
   const onAuth = useLogin();
   React.useEffect(() => {
     const unregisterAuthObserver =
@@ -24,14 +46,16 @@ export default function Login() {
     return () => unregisterAuthObserver();
   }, [onAuth]);
   return (
-    <Card>
-      <CardHeader title="Log-in" />
-      <CardContent>
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={auth()}
-        />
-      </CardContent>
-    </Card>
+    <main className={root}>
+      <Card className={card}>
+        <CardHeader component="section" className={cardHeader} title="Log-in" />
+        <CardContent component="section">
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={auth()}
+          />
+        </CardContent>
+      </Card>
+    </main>
   );
 }
