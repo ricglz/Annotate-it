@@ -1,14 +1,14 @@
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import HomeDrawerCreateDialog from './HomeDrawerCreateDialog';
+import HomeDrawerHeader from './HomeDrawerHeader';
+import HomeDrawerFolder from './HomeDrawerFolder';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { NavLink } from 'react-router-dom';
+import useToogle from '../hooks/useToogle';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { graphql } from 'react-relay';
 import { usePagination } from 'relay-hooks';
@@ -45,42 +45,40 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '1rem',
       overflow: 'auto',
     },
-    link: {
-      color: theme.palette.text.primary,
-    },
-    selectedLink: {
-      color: theme.palette.primary.light
-    },
     paper: {
       width: 240,
     },
   }),
 );
 
-const HomeDrawer = (props: any) => {
-  const classes = useStyles();
-  let [viewer] = usePagination(fragment, props.viewer);
+const useEdges = (fragViewer: any) : any[] => {
+  let [viewer] = usePagination(fragment, fragViewer);
   viewer = viewer || {};
-  const { folders = {} } = viewer
-  const { edges = [] } = folders
+  const { folders = {} } = viewer;
+  const { edges = [] } = folders;
+  return edges;
+}
+
+const HomeDrawer = ({ viewer }: any) => {
+  const classes = useStyles();
+  const edges = useEdges(viewer);
+  const folderComponents = edges.map(
+    ({ node }: any) => <HomeDrawerFolder key={node.id} folder={node} />
+  );
+  const [openCreate, toogleCreate] = useToogle();
   return (
     <nav className={classes.root}>
       <Drawer variant='permanent' classes={{paper: classes.paper}}>
         <Toolbar />
         <div className={classes.drawerContainer}>
-          <Typography variant='h4'>Folders</Typography>
+          <HomeDrawerHeader onClick={toogleCreate} />
           <Divider className={classes.divider} />
           <List aria-label="folders">
-            {edges.map(({ node }: any) => (
-              <NavLink key={node.id} to={`/folder/${node.id}`} className={classes.link} activeClassName={classes.selectedLink}>
-                <ListItem button>
-                  <ListItemText primary={node.name} />
-                </ListItem>
-              </NavLink>
-            ))}
+            {folderComponents}
           </List>
         </div>
       </Drawer>
+      <HomeDrawerCreateDialog open={openCreate} toogle={toogleCreate} />
     </nav>
   );
 };
