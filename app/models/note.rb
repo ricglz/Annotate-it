@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Note < ApplicationRecord
-  acts_as_paranoid
 
   default_scope { without_deleted.order(updated_at: :desc) }
 

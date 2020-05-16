@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_001151) do
   create_table "folders", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_folders_on_user_id"
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_001151) do
   create_table "notes_tags", force: :cascade do |t|
     t.bigint "note_id", null: false
     t.bigint "tag_id", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["note_id"], name: "index_notes_tags_on_note_id"
@@ -46,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_001151) do
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_tags_on_user_id"
@@ -55,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_001151) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

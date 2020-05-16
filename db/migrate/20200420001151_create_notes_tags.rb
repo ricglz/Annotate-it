@@ -3,6 +3,7 @@ class CreateNotesTags < ActiveRecord::Migration[6.0]
     create_table :notes_tags do |t|
       t.references :note, null: false, foreign_key: true
       t.references :tag, null: false, foreign_key: true
+      t.datetime :deleted_at
 
       t.timestamps
     end

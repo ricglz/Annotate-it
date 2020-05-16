@@ -3,6 +3,7 @@ class CreateFolders < ActiveRecord::Migration[6.0]
     create_table :folders do |t|
       t.string :name
       t.references :user, null: false, foreign_key: true
+      t.datetime :deleted_at
 
       t.timestamps
     end
