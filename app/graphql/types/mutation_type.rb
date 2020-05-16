@@ -2,6 +2,10 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :create_note, mutation: Mutations::CreateNote
+    field :rename_folder, mutation: Mutations::RenameFolder
+    field :create_folder, mutation: Mutations::CreateFolder
+    field :delete_folder, mutation: Mutations::DeleteFolder
     field :delete_note, mutation: Mutations::DeleteNote
     field :update_note_content, mutation: Mutations::UpdateNoteContent
     field :login_mutation,
