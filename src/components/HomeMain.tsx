@@ -1,4 +1,5 @@
 import NotesDetails from './NotesDetails';
+import NotesCreator from './NotesCreator';
 import FolderDetails from './FolderDetails';
 import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,6 +23,9 @@ const HomeMain = () => {
     <main className={main}>
       <Toolbar />
       <Switch>
+        <Route path="/folder/:folderId/notes/new">
+          <NotesCreator />
+        </Route>
         <Route path="/folder/:folderId/notes/:noteId">
           <NotesDetails />
         </Route>
