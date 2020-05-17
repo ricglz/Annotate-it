@@ -46,16 +46,25 @@ function useMutationRequisites() {
     const edge = payload.getLinkedRecord('edge')
     sharedUpdater({ store, id, edge});
   }
+  const configs = [{
+    connectionInfo: [{
+      key: 'HomeDrawer_folders',
+      rangeBehavior: 'append',
+    }],
+    edgeName: 'edge',
+    parentID: id,
+    type: 'RANGE_ADD',
+  }];
 
-  return { email, updater };
+  return { email, updater, configs };
 }
 
 function useCreateFolderMutation(onCompleted: (e: any) => void): callback {
-  const { email, updater } = useMutationRequisites();
+  const { email, configs } = useMutationRequisites();
   const [name, onChange] = useTextField('');
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, updater }
+    mutation, { onCompleted, configs: (configs as any) }
   );
   const onClick = useCallback(() => {
     mutate({ variables: { input: { email, name } } })

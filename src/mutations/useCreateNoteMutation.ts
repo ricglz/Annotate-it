@@ -1,6 +1,5 @@
 import useTextField from '../hooks/useTextField';
 import { ChangeEvent, useCallback, useContext } from 'react';
-import { ConnectionHandler } from 'relay-runtime';
 import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
 import { useHistory, useParams } from 'react-router-dom';
@@ -26,19 +25,6 @@ interface MutationObject {
 
 type callback = [() => void, MutationObject]
 
-function sharedUpdater({ store, id, edge }: any) {
-  const userProxy = store.get(id);
-
-  const connection = ConnectionHandler.getConnection(
-    userProxy,
-    'FolderNotes_notes',
-  );
-  if (connection) {
-    console.log('hi');
-    ConnectionHandler.insertEdgeBefore(connection, edge);
-  }
-}
-
 function useMutationRequisites() {
   const history = useHistory();
   const { folderId } = useParams();
@@ -46,22 +32,26 @@ function useMutationRequisites() {
   const onCompleted = useCallback(() => {
     history.push(`/folder/${folderId}`);
   }, [folderId, history]);
-  const updater = (store: any) => {
-    const payload = store.getRootField('createNote');
-    const edge = payload.getLinkedRecord('edge')
-    sharedUpdater({ store, id: folderId, edge});
-  }
+  const configs = [{
+    connectionInfo: [{
+      key: 'FolderNotes_notes',
+      rangeBehavior: 'prepend'
+    }],
+    edgeName: 'edge',
+    parentID: folderId,
+    type: 'RANGE_ADD',
+  }];
 
-  return { folderId, onCompleted, updater };
+  return { configs, folderId, onCompleted};
 }
 
 function useCreateNoteMutation(): callback {
-  const { folderId, onCompleted, updater } = useMutationRequisites();
+  const { folderId, onCompleted, configs } = useMutationRequisites();
   const { email } = (useContext(UserContext) as any).user;
   const [content, onChange] = useTextField('');
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, updater }
+    mutation, { onCompleted, configs: (configs as any) }
   );
   const onClick = useCallback(() => {
     mutate({ variables: { input: { email, folderId, content } } })
