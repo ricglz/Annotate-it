@@ -1,7 +1,8 @@
 import useTextField from '../hooks/useTextField';
+import { ChangeEvent, useCallback, useContext } from 'react';
+import { ConnectionHandler } from 'relay-runtime';
 import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
-import { ChangeEvent, useCallback, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from 'relay-hooks';
 
@@ -25,6 +26,19 @@ interface MutationObject {
 
 type callback = [() => void, MutationObject]
 
+function sharedUpdater({ store, id, edge }: any) {
+  const userProxy = store.get(id);
+
+  const connection = ConnectionHandler.getConnection(
+    userProxy,
+    'FolderNotes_notes',
+  );
+  if (connection) {
+    console.log('hi');
+    ConnectionHandler.insertEdgeBefore(connection, edge);
+  }
+}
+
 function useMutationRequisites() {
   const history = useHistory();
   const { folderId } = useParams();
@@ -32,26 +46,22 @@ function useMutationRequisites() {
   const onCompleted = useCallback(() => {
     history.push(`/folder/${folderId}`);
   }, [folderId, history]);
-  const configs = [{
-    connectionKeys: [{
-      key: 'FolderNotes_notes',
-      rangeBehavior: 'append'
-    }],
-    edgeName: 'edge',
-    parentID: folderId,
-    type: 'RANGE_ADD',
-  }];
+  const updater = (store: any) => {
+    const payload = store.getRootField('createNote');
+    const edge = payload.getLinkedRecord('edge')
+    sharedUpdater({ store, id: folderId, edge});
+  }
 
-  return { configs, folderId, onCompleted };
+  return { folderId, onCompleted, updater };
 }
 
 function useCreateNoteMutation(): callback {
-  const { configs, folderId, onCompleted } = useMutationRequisites();
+  const { folderId, onCompleted, updater } = useMutationRequisites();
   const { email } = (useContext(UserContext) as any).user;
   const [content, onChange] = useTextField('');
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, configs: (configs as any) }
+    mutation, { onCompleted, updater }
   );
   const onClick = useCallback(() => {
     mutate({ variables: { input: { email, folderId, content } } })

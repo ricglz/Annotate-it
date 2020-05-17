@@ -7,6 +7,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import useCreateFolderMutation from '../mutations/useCreateFolderMutation';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 interface Props {
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const HomeDrawerCreateDialog = ({ open, toogle }: Props) => {
   const { actions } = useStyles();
+  const [
+    onClick, { loading, name, onChange }
+  ] = useCreateFolderMutation(toogle);
   return (
     <Dialog
       aria-labelledby="create-folder-dialog"
@@ -37,12 +41,16 @@ const HomeDrawerCreateDialog = ({ open, toogle }: Props) => {
           fullWidth
           id="name"
           label="Name of folder"
+          onChange={onChange}
           margin="dense"
+          value={name}
         />
       </DialogContent>
       <DialogActions className={actions}>
         <Button color="secondary" onClick={toogle}>Cancel</Button>
-        <Button color="primary" onClick={toogle}>Create</Button>
+        <Button color="primary" onClick={onClick}>
+          { loading ? 'Creating' : 'Create' }
+        </Button>
       </DialogActions>
     </Dialog>
   )
