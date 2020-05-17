@@ -13,21 +13,22 @@
 ActiveRecord::Schema.define(version: 2020_04_20_001151) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "folders", force: :cascade do |t|
+  create_table "folders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_folders_on_user_id"
   end
 
-  create_table "notes", force: :cascade do |t|
+  create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "content"
-    t.bigint "user_id", null: false
-    t.bigint "folder_id"
+    t.uuid "user_id", null: false
+    t.uuid "folder_id"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -35,9 +36,9 @@ ActiveRecord::Schema.define(version: 2020_04_20_001151) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
-  create_table "notes_tags", force: :cascade do |t|
-    t.bigint "note_id", null: false
-    t.bigint "tag_id", null: false
+  create_table "notes_tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "note_id", null: false
+    t.uuid "tag_id", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -45,16 +46,16 @@ ActiveRecord::Schema.define(version: 2020_04_20_001151) do
     t.index ["tag_id"], name: "index_notes_tags_on_tag_id"
   end
 
-  create_table "tags", force: :cascade do |t|
+  create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"

@@ -21,11 +21,12 @@ module ProjectBackend
     config.api_only = true
 
     config.generators do |g|
-      g.test_framework  false
-      g.stylesheets     false
-      g.javascripts     false
-      g.helper          false
       g.channel         assets: false
+      g.helper          false
+      g.javascripts     false
+      g.orm             :active_record, primary_key: :uid
+      g.stylesheets     false
+      g.test_framework  false
     end
   end
 end
