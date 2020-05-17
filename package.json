@@ -27,7 +27,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "relay": "relay-compiler --language typescript --extensions ts tsx"
+    "relay": "relay-compiler --language typescript --extensions ts tsx",
+    "deploy": "yarn build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"

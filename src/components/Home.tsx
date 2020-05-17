@@ -15,18 +15,11 @@ const query = graphql`
 
 function Home() {
   const { user } = React.useContext(UserContext);
-  const { props, error } = useQuery(query, user);
   const history = useHistory();
-
-  React.useEffect(() => {
-    const timeOut = setTimeout(() => {
-      if(props && !props.viewer) {
-        history.push('/login')
-      }
-    });
-
-    return () => clearTimeout(timeOut);
-  }, [history, props]);
+  if(!(user as any).id) {
+    history.push('/login');
+  }
+  const { props, error } = useQuery(query, user);
 
   if(props) {
     return <HomeContent viewer={props.viewer} />

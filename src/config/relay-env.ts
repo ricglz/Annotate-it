@@ -7,7 +7,9 @@ import {
   Variables
 } from 'relay-runtime';
 
-const url = 'http://127.0.0.1:3001/graphql'
+const url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ?
+  'http://127.0.0.1:3001/graphql' :
+  'https://annotate-it-backend.herokuapp.com/graphql';
 
 function fetchQuery(
   operation: RequestParameters,
