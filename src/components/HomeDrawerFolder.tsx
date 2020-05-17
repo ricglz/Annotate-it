@@ -27,14 +27,20 @@ interface Folder {
 
 interface Props {
   folder: Folder;
+  setFolderEdit: (folder: Folder) => void;
+  toogleEdit: (e: any) => void;
 }
 
-const HomeDrawerFolder = ({ folder }: Props) => {
+const HomeDrawerFolder = ({ folder, toogleEdit, setFolderEdit }: Props) => {
   const { link, selected } = useStyles();
+  const onClick = React.useCallback((e: any) => {
+    setFolderEdit(folder);
+    toogleEdit(e);
+  }, [folder, setFolderEdit, toogleEdit])
   return (
     <>
       <ListItem button>
-        <ListItemIcon>
+        <ListItemIcon onClick={onClick}>
           <PencilIcon />
         </ListItemIcon>
         <NavLink

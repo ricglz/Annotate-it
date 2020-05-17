@@ -1,6 +1,7 @@
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import HomeDrawerCreateDialog from './HomeDrawerCreateDialog';
+import HomeDrawerEditDialog from './HomeDrawerEditDialog';
 import HomeDrawerHeader from './HomeDrawerHeader';
 import HomeDrawerFolder from './HomeDrawerFolder';
 import List from '@material-ui/core/List';
@@ -62,10 +63,19 @@ const useEdges = (fragViewer: any) : any[] => {
 const HomeDrawer = ({ viewer }: any) => {
   const classes = useStyles();
   const edges = useEdges(viewer);
-  const folderComponents = edges.map(
-    ({ node }: any) => <HomeDrawerFolder key={node.id} folder={node} />
-  );
   const [openCreate, toogleCreate] = useToogle();
+  const [openEdit, toogleEdit] = useToogle();
+  const [folderEdit, setFolderEdit] = React.useState({ name: '', id: '' });
+  const folderComponents = edges.map(
+    ({ node }: any) => (
+      <HomeDrawerFolder
+        folder={node}
+        key={node.id}
+        setFolderEdit={setFolderEdit}
+        toogleEdit={toogleEdit}
+      />
+    )
+  );
   return (
     <nav className={classes.root}>
       <Drawer variant='permanent' classes={{paper: classes.paper}}>
@@ -79,6 +89,11 @@ const HomeDrawer = ({ viewer }: any) => {
         </div>
       </Drawer>
       <HomeDrawerCreateDialog open={openCreate} toogle={toogleCreate} />
+      <HomeDrawerEditDialog
+        open={openEdit}
+        toogle={toogleEdit}
+        folder={folderEdit}
+      />
     </nav>
   );
 };

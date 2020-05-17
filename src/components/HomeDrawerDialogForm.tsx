@@ -37,7 +37,7 @@ const HomeDrawerDialogForm = ({
   return (
     <Dialog aria-labelledby={identifier} onClose={toogle} open={open}>
       <DialogTitle id={identifier}>{label}</DialogTitle>
-      <DialogContent>
+      <DialogContent dividers>
         <TextField
           autoFocus
           fullWidth
