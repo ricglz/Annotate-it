@@ -1,6 +1,6 @@
-import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
-import { useCallback, useContext  } from 'react';
+import { useCallback  } from 'react';
+import { useDeleteNoteMutationVariables as Variables } from './__generated__/useDeleteNoteMutation.graphql';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from 'relay-hooks';
 
@@ -39,14 +39,14 @@ function useMutationRequisites() {
 
 function useDeleteNoteMutation(): callback {
   const { noteId, onCompleted, optimisticResponse, configs } = useMutationRequisites();
-  const { email } = (useContext(UserContext) as any).user;
 
   const [mutate, { loading }] = useMutation(
     mutation, { onCompleted, optimisticResponse, configs: (configs as any) }
   );
+  const variables = { input: { noteId } } as Variables;
   const onClick = useCallback(() => {
-    mutate({ variables: { input: { email, noteId } } })
-  }, [email, mutate, noteId]);
+    mutate({ variables })
+  }, [mutate, variables]);
 
   return [onClick, { loading }];
 }

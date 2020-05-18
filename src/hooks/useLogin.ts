@@ -8,12 +8,12 @@ export default function useLogin() {
   const { changeUser } = useContext(UserContext);
   const history = useHistory();
   const onCompleted = useCallback(() => {
-    const user = auth().currentUser || {email: null, uid: ''};
-    const { email, uid } = user;
+    const user = auth().currentUser || { email: null };
+    const { email } = user;
     if (!email) {
       return;
     }
-    changeUser({ email, password: uid })
+    changeUser({ email })
     history.push('/')
   }, [changeUser, history])
   const onAuth = useCallback((authUser) => {
