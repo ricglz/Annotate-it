@@ -23,7 +23,7 @@ const Footer = () => {
   const { link, root } = useStyles();
   return (
     <footer className={root}>
-      @2020 Annotate it!,
+      @2020 Annotate it!
       <Link className={link} to="/about-us">
         See more about us
       </Link>
