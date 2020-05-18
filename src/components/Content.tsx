@@ -9,6 +9,9 @@ const Home = loadable(() => import('./Home'), {
 const Login = loadable(() => import('./Login'), {
   fallback: <Loader />
 });
+const AboutUs = loadable(() => import('./AboutUs'), {
+  fallback: <Loader />
+});
 
 const Content = () => (
   <>
@@ -17,7 +20,7 @@ const Content = () => (
         <Login />
       </Route>
       <Route path="/about-us">
-        <div>About us</div>
+        <AboutUs />
       </Route>
       <Route path="/">
         <Home />
