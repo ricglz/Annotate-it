@@ -1,6 +1,8 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import Divider from '@material-ui/core/Divider';
+import Footer from './Footer';
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import createStyles from '@material-ui/core/styles/createStyles';
@@ -21,24 +23,40 @@ const uiConfig = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex',
-      flex: 1,
-      justifyContent: 'center',
-      margin: '2rem',
-      padding: '2rem',
-    },
     card: {
       minWidth: '80%',
     },
+    cardContent: {
+      flex: 4,
+    },
     cardHeader: {
       textAlign: 'center'
-    }
+    },
+    column: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    flex: {
+      flex: '1 0 auto',
+    },
+    main: {
+      display: 'flex',
+      margin: '2rem',
+      padding: '2rem',
+    },
+    jcCenter: {
+      justifyContent: 'center',
+    },
+    pureFlex: {
+      flex: 1,
+    },
   }),
 );
 
 export default function Login() {
-  const { root, card, cardHeader } = useStyles();
+  const {
+    card, cardContent, cardHeader, flex, jcCenter, main, pureFlex, column
+  } = useStyles();
   const onAuth = useLogin();
   React.useEffect(() => {
     const unregisterAuthObserver =
@@ -46,16 +64,28 @@ export default function Login() {
     return () => unregisterAuthObserver();
   }, [onAuth]);
   return (
-    <main className={root}>
-      <Card className={card}>
-        <CardHeader component="section" className={cardHeader} title="Log-in" />
-        <CardContent component="section">
-          <StyledFirebaseAuth
-            uiConfig={uiConfig}
-            firebaseAuth={auth()}
+    <div className={`${column} ${pureFlex}`}>
+      <main className={`${main} ${flex} ${jcCenter}`}>
+        <Card className={`${card} ${column}`}>
+          <CardHeader
+            className={`${cardHeader} ${pureFlex}`}
+            component="section"
+            title="Log-in"
           />
-        </CardContent>
-      </Card>
-    </main>
+          <Divider />
+          <CardContent
+            className={`${cardContent} ${column} ${jcCenter}`}
+            component="section"
+          >
+            <StyledFirebaseAuth
+              firebaseAuth={auth()}
+              uiConfig={uiConfig}
+            />
+          </CardContent>
+        </Card>
+      </main>
+      <div className={flex} />
+      <Footer />
+    </div>
   );
 }
