@@ -185,7 +185,7 @@ type LoginMutationPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  viewer: User
+  token: String!
 }
 
 type Mutation {

@@ -17,7 +17,7 @@ class GraphqlController < ApplicationController
   private
 
   def result
-    context = {}
+    context = { viewer: viewer }
     ProjectBackendSchema.execute(
       params[:query],
       variables: ensure_hash(params[:variables]),
@@ -48,5 +48,17 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+  end
+
+  def header
+    @header ||= request.headers['Authorization']
+    @header ||= header.split(' ').last if @header
+  end
+
+  def viewer
+    decoded = JsonWebToken.decode(header)
+    User.find(decoded[:viewer_id])
+  rescue JWT::DecodeError, ActiveRecord::RecordNotFound => _e
+    nil
   end
 end
