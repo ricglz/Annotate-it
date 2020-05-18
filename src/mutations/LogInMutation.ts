@@ -9,15 +9,20 @@ const mutation = graphql`
       password: $password,
       name: $name
     }) {
-      viewer {
-        id
-      }
+      token
     }
   }
 `
 
 export default function LogInMutation(
-  variables: LogInMutationVariables, onCompleted: () => void
+  variables: LogInMutationVariables, callback: () => void
 ) {
+  const onCompleted = ({ loginMutation }: any) => {
+    const { token } = loginMutation;
+    if(token) {
+      localStorage.setItem('token', token)
+      callback();
+    }
+  }
   commitMutation(environment, { mutation, variables, onCompleted });
 };
