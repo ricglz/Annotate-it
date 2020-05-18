@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom";
 import { useQuery } from 'relay-hooks';
 
 const query = graphql`
-  query HomeQuery($email: String!, $password: String!) {
-    viewer(email: $email, password: $password) {
+  query HomeQuery {
+    viewer {
       ...HomeContent_viewer
     }
   }
@@ -19,7 +19,7 @@ function Home() {
   if(!(user as any).email) {
     history.push('/login');
   }
-  const { props, error } = useQuery(query, user);
+  const { props, error } = useQuery(query, {  });
 
   if(props) {
     return <HomeContent viewer={props.viewer} />

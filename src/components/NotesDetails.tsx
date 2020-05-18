@@ -4,17 +4,12 @@ import NotesRenderer from './NotesRenderer';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Route, useParams, useRouteMatch } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
 import { useQuery } from 'relay-hooks';
 
 const query = graphql`
-  query NotesDetailsQuery(
-    $email: String!
-    $password: String!
-    $noteId: ID!
-  ) {
-    viewer(email: $email, password: $password) {
+  query NotesDetailsQuery($noteId: ID!) {
+    viewer {
       note(id: $noteId) {
         id
         content
@@ -24,10 +19,9 @@ const query = graphql`
 `
 
 const NotesDetails = () => {
-  const { user } = React.useContext(UserContext);
   const { noteId } = useParams();
   const { path } = useRouteMatch();
-  const { props, error } = useQuery(query, { ...user, noteId });
+  const { props, error } = useQuery(query, { noteId });
   if(props) {
     const { viewer = {} } = props;
     const { note = {} } = viewer;

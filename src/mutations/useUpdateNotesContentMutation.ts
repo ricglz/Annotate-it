@@ -1,7 +1,6 @@
 import useTextField from '../hooks/useTextField';
-import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
-import { ChangeEvent, useCallback, useContext  } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from 'relay-hooks';
 
@@ -50,15 +49,14 @@ function useUpdateNotesContentMutation(content: string): callback {
   const {
     noteId, onChange, onCompleted, optimisticResponse, text
   } = useMutationRequisites(content);
-  const { email } = (useContext(UserContext) as any).user;
 
   const [mutate, { loading }] = useMutation(
     mutation, { onCompleted, optimisticResponse }
   );
 
   const onClick = useCallback(() => {
-    mutate({ variables: { input: { content: text, email, noteId } } })
-  }, [text, email, mutate, noteId])
+    mutate({ variables: { input: { content: text, noteId } } })
+  }, [text, mutate, noteId])
   return [onClick, { loading, onChange, text }];
 }
 

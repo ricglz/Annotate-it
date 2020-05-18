@@ -1,7 +1,6 @@
 import useTextField from '../hooks/useTextField';
-import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
-import { ChangeEvent, useCallback, useContext  } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { useMutation } from 'relay-hooks';
 
 const mutation = graphql`
@@ -47,15 +46,14 @@ function useRenameFolderMutation(
   folder: Folder, onCompleted: (e: any) => void
 ): callback {
   const { name, onChange, optimisticResponse } = useMutationRequisites(folder);
-  const { email } = (useContext(UserContext) as any).user;
 
   const [mutate, { loading }] = useMutation(
     mutation, { onCompleted, optimisticResponse }
   );
 
   const onClick = useCallback(() => {
-    mutate({ variables: { input: { email, name, folderId: folder.id } } })
-  }, [email, folder, mutate, name])
+    mutate({ variables: { input: { name, folderId: folder.id } } })
+  }, [folder, mutate, name])
   return [onClick, { loading, name, onChange }];
 }
 

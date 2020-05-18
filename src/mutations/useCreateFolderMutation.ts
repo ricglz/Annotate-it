@@ -3,6 +3,7 @@ import { ChangeEvent, useCallback, useContext } from 'react';
 import { ConnectionHandler } from 'relay-runtime';
 import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
+import { useCreateFolderMutationVariables as Variables } from './__generated__/useCreateFolderMutation.graphql';
 import { useMutation } from 'relay-hooks';
 
 const mutation = graphql`
@@ -39,7 +40,7 @@ function sharedUpdater({ store, id, edge }: any) {
 }
 
 function useMutationRequisites() {
-  const { id, email } = (useContext(UserContext) as any).user;
+  const { id } = (useContext(UserContext) as any).user;
 
   const updater = (store: any) => {
     const payload = store.getRootField('createFolder');
@@ -56,19 +57,20 @@ function useMutationRequisites() {
     type: 'RANGE_ADD',
   }];
 
-  return { email, updater, configs };
+  return { updater, configs };
 }
 
 function useCreateFolderMutation(onCompleted: (e: any) => void): callback {
-  const { email, configs } = useMutationRequisites();
+  const { configs } = useMutationRequisites();
   const [name, onChange] = useTextField('');
 
   const [mutate, { loading }] = useMutation(
     mutation, { onCompleted, configs: (configs as any) }
   );
+  const variables = { input: { name } } as Variables;
   const onClick = useCallback(() => {
-    mutate({ variables: { input: { email, name } } })
-  }, [email, mutate, name]);
+    mutate({ variables })
+  }, [mutate, variables]);
 
   return [onClick, { loading, name, onChange }];
 }

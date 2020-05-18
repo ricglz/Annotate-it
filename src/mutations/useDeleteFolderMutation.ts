@@ -20,7 +20,7 @@ type callback = [() => void, MutationObject]
 
 function useMutationRequisites() {
   const history = useHistory();
-  const { email, id } = (useContext(UserContext) as any).user;
+  const { id } = (useContext(UserContext) as any).user;
   const { folderId } = useParams();
 
   const onCompleted = useCallback(() => {
@@ -35,20 +35,20 @@ function useMutationRequisites() {
     type: 'RANGE_DELETE',
   }];
 
-  return { folderId, email, onCompleted, optimisticResponse, configs };
+  return { folderId, onCompleted, optimisticResponse, configs };
 }
 
 function useDeleteFolderMutation(): callback {
   const {
-    folderId, email, onCompleted, optimisticResponse, configs
+    folderId, onCompleted, optimisticResponse, configs
   } = useMutationRequisites();
 
   const [mutate, { loading }] = useMutation(
     mutation, { onCompleted, optimisticResponse, configs: (configs as any) }
   );
   const onClick = useCallback(() => {
-    mutate({ variables: { input: { email, folderId } } })
-  }, [email, mutate, folderId]);
+    mutate({ variables: { input: { folderId } } })
+  }, [mutate, folderId]);
 
   return [onClick, { loading }];
 }

@@ -1,7 +1,7 @@
 import useTextField from '../hooks/useTextField';
-import { ChangeEvent, useCallback, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import { ChangeEvent, useCallback } from 'react';
 import { graphql } from 'react-relay';
+import { useCreateNoteMutationVariables as Variables } from './__generated__/useCreateNoteMutation.graphql';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from 'relay-hooks';
 
@@ -47,15 +47,15 @@ function useMutationRequisites() {
 
 function useCreateNoteMutation(): callback {
   const { folderId, onCompleted, configs } = useMutationRequisites();
-  const { email } = (useContext(UserContext) as any).user;
   const [content, onChange] = useTextField('');
 
   const [mutate, { loading }] = useMutation(
     mutation, { onCompleted, configs: (configs as any) }
   );
+  const variables = { input: { folderId, content } } as Variables;
   const onClick = useCallback(() => {
-    mutate({ variables: { input: { email, folderId, content } } })
-  }, [email, mutate, folderId, content]);
+    mutate({ variables })
+  }, [mutate, variables]);
 
   return [onClick, { loading, content, onChange }];
 }
