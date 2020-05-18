@@ -4,14 +4,10 @@ module Types
   class QueryType < Types::BaseObject
     description 'The query root of this schema'
 
-    field :viewer, Types::UserType, null: true do
-      argument :email, String, required: true
-      argument :password, String, required: true
-    end
+    field :viewer, Types::UserType, null: true
 
-    def viewer(**args)
-      user = User.find_by(email: args[:email])
-      user.authenticate(args[:password]) ? user : nil
+    def viewer
+      context[:viewer]
     end
   end
 end

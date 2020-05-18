@@ -4,16 +4,14 @@ module Mutations
   class DeleteNote < BaseMutation
     field :deleted_note_id, ID, null: false
 
-    argument :email, String, required: true
     argument :note_id, ID, required: true
 
     def resolve(arguments)
-      user = User.find_by(email: arguments[:email])
-      raise GraphQL::ExecutionError, "This user doesn't exist" unless user
+      raise GraphQL::ExecutionError, "This viewer doesn't exist" unless viewer
 
-      note = user.notes.find(arguments[:note_id])
+      note = viewer.notes.find(arguments[:note_id])
       unless note
-        raise GraphQL::ExecutionError, "This note doesn't belong to the user"
+        raise GraphQL::ExecutionError, "This note doesn't belong to the viewer"
       end
 
       note.delete

@@ -6,7 +6,6 @@ input CreateFolderInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  email: String!
   name: String!
 }
 
@@ -30,7 +29,6 @@ input CreateNoteInput {
   """
   clientMutationId: String
   content: String!
-  email: String!
   folderId: ID!
 }
 
@@ -53,7 +51,6 @@ input DeleteFolderInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  email: String!
   folderId: ID!
 }
 
@@ -76,7 +73,6 @@ input DeleteNoteInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  email: String!
   noteId: ID!
 }
 
@@ -298,7 +294,7 @@ type PageInfo {
 The query root of this schema
 """
 type Query {
-  viewer(email: String!, password: String!): User
+  viewer: User
 }
 
 """
@@ -309,7 +305,6 @@ input RenameFolderInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  email: String!
   folderId: ID!
   name: String!
 }
@@ -402,7 +397,6 @@ input UpdateNoteContentInput {
   """
   clientMutationId: String
   content: String!
-  email: String!
   noteId: ID!
 }
 
