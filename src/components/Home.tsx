@@ -16,7 +16,7 @@ const query = graphql`
 function Home() {
   const { user } = React.useContext(UserContext);
   const history = useHistory();
-  if(!(user as any).id) {
+  if(!(user as any).email) {
     history.push('/login');
   }
   const { props, error } = useQuery(query, user);
