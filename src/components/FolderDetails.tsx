@@ -1,10 +1,13 @@
-import Divider from '@material-ui/core/Divider';
-import FolderHeader from './FolderHeader';
-import FolderNotes from './FolderNotes';
+import Loader from './Loader';
 import React from 'react'
+import loadable from "@loadable/component";
 import { graphql } from 'react-relay';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'relay-hooks';
+
+const FolderContent = loadable(() => import('./FolderContent'), {
+  fallback: <Loader />
+});
 
 const query = graphql`
   query FolderDetailsQuery($folderId: ID!) {
@@ -25,17 +28,13 @@ const FolderDetails = () => {
     const { viewer = {} } = props;
     const { folder = {} } = viewer;
     return (
-      <>
-        <FolderHeader folder={folder} />
-        <Divider />
-        <FolderNotes folder={folder}/>
-      </>
+      <FolderContent folder={folder}/>
     );
   }
   if(error) {
     return <div>{ error.message }</div>;
   }
-  return <div>Loading...</div>;
+  return <Loader />;
 }
 
 export default FolderDetails;

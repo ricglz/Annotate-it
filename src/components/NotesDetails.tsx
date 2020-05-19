@@ -1,11 +1,13 @@
-import Divider from '@material-ui/core/Divider';
-import NotesEditor from './NotesEditor';
-import NotesRenderer from './NotesRenderer';
+import Loader from './Loader';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { Route, useParams, useRouteMatch } from 'react-router-dom';
+import loadable from "@loadable/component";
 import { graphql } from 'react-relay';
+import { useParams } from 'react-router-dom';
 import { useQuery } from 'relay-hooks';
+
+const NotesContent = loadable(() => import('./NotesContent'), {
+  fallback: <Loader />
+});
 
 const query = graphql`
   query NotesDetailsQuery($noteId: ID!) {
@@ -20,28 +22,18 @@ const query = graphql`
 
 const NotesDetails = () => {
   const { noteId } = useParams();
-  const { path } = useRouteMatch();
   const { props, error } = useQuery(query, { noteId });
   if(props) {
     const { viewer = {} } = props;
     const { note = {} } = viewer;
     return (
-      <>
-        <Typography variant="h4">Note</Typography>
-        <Divider />
-        <Route path={`${path}/edit`}>
-          <NotesEditor content={note.content} />
-        </Route>
-        <Route exact path={path}>
-          <NotesRenderer content={note.content} />
-        </Route>
-      </>
+      <NotesContent note={note} />
     );
   }
   if(error) {
     return <div>{ error.message }</div>;
   }
-  return <div>Loading...</div>;
+  return <Loader />;
 };
 
 export default NotesDetails;
