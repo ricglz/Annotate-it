@@ -14,19 +14,17 @@ import useLogout from '../hooks/useLogout';
 import { ChangeThemeContext } from '../contexts/ChangeThemeContext';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      backgroundColor: theme.palette.background.default,
-      color: theme.palette.text.primary,
-      maxHeight: 64,
-      zIndex: theme.zIndex.drawer + 1,
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }),
-);
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    maxHeight: 64,
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 const HomeAppBar = () => {
   const classes = useStyles();

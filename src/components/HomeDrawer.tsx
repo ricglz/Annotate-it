@@ -33,24 +33,22 @@ const fragment = graphql`
   }
 `
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    divider: {
-      marginTop: '0.5rem',
-    },
-    root: {
-      width: 240,
-      flexShrink: 0,
-    },
-    drawerContainer: {
-      padding: '1rem',
-      overflow: 'auto',
-    },
-    paper: {
-      width: 240,
-    },
-  }),
-);
+const useStyles = makeStyles((_: Theme) => createStyles({
+  divider: {
+    marginTop: '0.5rem',
+  },
+  root: {
+    width: 240,
+    flexShrink: 0,
+  },
+  drawerContainer: {
+    padding: '1rem',
+    overflow: 'auto',
+  },
+  paper: {
+    width: 240,
+  },
+}));
 
 const useEdges = (fragViewer: any) : any[] => {
   let [viewer] = usePagination(fragment, fragViewer);

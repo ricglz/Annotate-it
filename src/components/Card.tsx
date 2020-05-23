@@ -9,27 +9,25 @@ interface Props {
   useNormalFlex?: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {
-      display: 'flex',
-      flexDirection: 'column',
-      minWidth: '80%',
-    },
-    main: {
-      display: 'flex',
-      justifyContent: 'center',
-      margin: '2rem',
-      padding: '2rem',
-    },
-    normalFlex: {
-      flex: 1,
-    },
-    otherFlex: {
-      flex: '1 0 auto',
-    },
-  }),
-);
+const useStyles = makeStyles((_: Theme) => createStyles({
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: '80%',
+  },
+  main: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '2rem',
+    padding: '2rem',
+  },
+  normalFlex: {
+    flex: 1,
+  },
+  otherFlex: {
+    flex: '1 0 auto',
+  },
+}));
 
 const CustomCard = ({
   children,

@@ -8,14 +8,12 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Switch, Route } from 'react-router-dom';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    main: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  }),
-);
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  main: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
 
 const HomeMain = () => {
   const { main } = useStyles();

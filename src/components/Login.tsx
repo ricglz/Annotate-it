@@ -21,27 +21,25 @@ const uiConfig = {
   }
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    cardContent: {
-      flex: 4,
-      justifyContent: 'center',
-    },
-    cardHeader: {
-      textAlign: 'center'
-    },
-    column: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    flex: {
-      flex: '1 0 auto',
-    },
-    pureFlex: {
-      flex: 1,
-    },
-  }),
-);
+const useStyles = makeStyles((_: Theme) => createStyles({
+  cardContent: {
+    flex: 4,
+    justifyContent: 'center',
+  },
+  cardHeader: {
+    textAlign: 'center'
+  },
+  column: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  flex: {
+    flex: '1 0 auto',
+  },
+  pureFlex: {
+    flex: 1,
+  },
+}));
 
 export default function Login() {
   const { cardContent, cardHeader, column, flex, pureFlex } = useStyles();
