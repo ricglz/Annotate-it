@@ -1,24 +1,11 @@
-# README
+# Annotate it!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## How to run the project
 
-Things you may want to cover:
+1. `bundle install`
+2. `bundle exec rake db:setup`
+3. `bundle exec rails server`
 
-* Ruby version
+## What this is?
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This is only the backend for the project and data, providing an api to be able to communicate from any GraphQL client.
