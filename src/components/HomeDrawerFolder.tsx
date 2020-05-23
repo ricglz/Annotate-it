@@ -8,17 +8,15 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { NavLink } from 'react-router-dom';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    link: {
-      color: theme.palette.text.primary,
-      flex: 1,
-    },
-    selected: {
-      color: theme.palette.primary.light
-    },
-  }),
-);
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  link: {
+    color: theme.palette.text.primary,
+    flex: 1,
+  },
+  selected: {
+    color: theme.palette.primary.light
+  },
+}));
 
 interface Folder {
   id: string;

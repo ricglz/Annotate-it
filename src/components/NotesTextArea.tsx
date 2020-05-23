@@ -4,14 +4,12 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    textarea: {
-      padding: '1rem',
-      width: '100%',
-    },
-  }),
-);
+const useStyles = makeStyles((_: Theme) => createStyles({
+  textarea: {
+    padding: '1rem',
+    width: '100%',
+  },
+}));
 
 interface Props {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;

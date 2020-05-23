@@ -9,13 +9,11 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    actions: {
-      justifyContent: 'space-between'
-    },
-  }),
-);
+const useStyles = makeStyles((_: Theme) => createStyles({
+  actions: {
+    justifyContent: 'space-between'
+  },
+}));
 
 interface Props {
   identifier: string;

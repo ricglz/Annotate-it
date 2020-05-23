@@ -7,13 +7,11 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    buttonGrid: {
-      height: '100%',
-    },
-  }),
-);
+const useStyles = makeStyles((_: Theme) => createStyles({
+  buttonGrid: {
+    height: '100%',
+  },
+}));
 
 interface Props {
   onClick: (e: any) => void;

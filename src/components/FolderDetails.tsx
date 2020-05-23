@@ -19,7 +19,7 @@ const query = graphql`
       }
     }
   }
-`
+`;
 
 const FolderDetails = () => {
   const { folderId } = useParams();

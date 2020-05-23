@@ -5,17 +5,15 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    buttonsRow: {
-      margin: '1rem 0',
-    },
-    titleWrapper: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  }),
-);
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  buttonsRow: {
+    margin: '1rem 0',
+  },
+  titleWrapper: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
 
 interface Props {
   children: ReactNode;

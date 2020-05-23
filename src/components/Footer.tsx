@@ -4,20 +4,18 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    link: {
-      color: theme.palette.text.primary,
-      paddingLeft: '1rem',
-    },
-    root: {
-      display: 'flex',
-      flexShrink: 0,
-      justifyContent: 'center',
-      padding: '1rem',
-    },
-  }),
-);
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  link: {
+    color: theme.palette.text.primary,
+    paddingLeft: '1rem',
+  },
+  root: {
+    display: 'flex',
+    flexShrink: 0,
+    justifyContent: 'center',
+    padding: '1rem',
+  },
+}));
 
 const Footer = () => {
   const { link, root } = useStyles();

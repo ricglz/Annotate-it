@@ -31,14 +31,12 @@ const fragment = graphql`
   }
 `
 
-const useStyles = makeStyles((theme: Theme ) => (
-  createStyles({
-    link: {
-      color: theme.palette.text.primary,
-      textDecoration: 'none'
-    }
-  })
-));
+const useStyles = makeStyles((theme: Theme ) => createStyles({
+  link: {
+    color: theme.palette.text.primary,
+    textDecoration: 'none',
+  },
+}));
 
 const FolderNotes = (props: any) => {
   const { url } = useRouteMatch();
