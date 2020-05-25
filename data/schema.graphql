@@ -200,6 +200,7 @@ A note
 type Note {
   content: String
   folder: Folder
+  folderId: ID
   id: ID!
 
   """
@@ -477,6 +478,7 @@ type User {
     Returns the last _n_ elements from the list.
     """
     last: Int
+    query: String
   ): NoteConnection!
 
   """
