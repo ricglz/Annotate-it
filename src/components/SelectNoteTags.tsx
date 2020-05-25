@@ -1,9 +1,10 @@
 import React from 'react';
-import Select from 'react-select';
+import Select from 'react-select/creatable';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useNoteTagsPagination from '../hooks/useNoteTagsPagination';
 import useViewerTagsPagination from '../hooks/useViewerTagsPagination';
+import useCreateTagMutation from '../mutations/useCreateTagMutation';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const useStyles = makeStyles((theme: Theme ) => createStyles({
@@ -20,19 +21,31 @@ interface Props {
 
 const nodeToOption = ({ node }: any) => ({ value: node.id, label: node.name });
 
+function useSelect(props: Props) {
+  const selected = useNoteTagsPagination(props).map(nodeToOption);
+  const options = useViewerTagsPagination(props).map(nodeToOption);
+  const createTag = useCreateTagMutation();
+  const onChange = React.useCallback((values: any, { action }: any) => {
+    const { label } = values[values.length - 1];
+    if(action === 'create-option') {
+      const variables = { input: { name: label } };
+      createTag(variables);
+    }
+  }, [createTag])
+  return [selected, options, onChange];
+}
+
 const SelectNoteTags = (props: Props) => {
   const { root } = useStyles();
-  const selectedEdges = useNoteTagsPagination(props);
-  const allEdges = useViewerTagsPagination(props);
-  const selected = selectedEdges.map(nodeToOption);
-  const options = allEdges.map(nodeToOption);
+  const [selected, options, onChange] = useSelect(props);
   return (
     <Select
       className={root}
-      defaultValue={selected}
+      defaultValue={selected as any}
       isMulti
       name="tags"
-      options={options}
+      onChange={onChange as any}
+      options={options as any}
     />
   );
 };
