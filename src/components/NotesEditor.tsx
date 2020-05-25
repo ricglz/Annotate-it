@@ -8,10 +8,11 @@ import SelectNoteTags from './SelectNoteTags';
 import useUpdateNotesContentMutation from '../mutations/useUpdateNotesContentMutation';
 
 interface Props {
-  note: any
+  note: any;
+  viewer: any;
 }
 
-const NotesEditor = ({ note }: Props) => {
+const NotesEditor = ({ note, viewer }: Props) => {
   const { content } = note;
   const [onClickEdit, { loading, onChange, text }] = useUpdateNotesContentMutation(content);
   return (
@@ -28,7 +29,7 @@ const NotesEditor = ({ note }: Props) => {
           </Button>
         </Grid>
       </NotesButtonsRow>
-      <SelectNoteTags note={note} />
+      <SelectNoteTags note={note} viewer={viewer} />
       <NotesTextArea value={text} onChange={onChange} />
     </>
   );

@@ -12,6 +12,7 @@ const NotesContent = loadable(() => import('./NotesContent'), {
 const query = graphql`
   query NotesDetailsQuery($noteId: ID!) {
     viewer {
+      ...useViewerTagsPagination_viewer
       note(id: $noteId) {
         id
         content
@@ -28,7 +29,7 @@ const NotesDetails = () => {
     const { viewer = {} } = props;
     const { note = {} } = viewer;
     return (
-      <NotesContent note={note} />
+      <NotesContent note={note} viewer={viewer} />
     );
   }
   if(error) {

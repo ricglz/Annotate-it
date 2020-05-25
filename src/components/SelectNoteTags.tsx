@@ -3,6 +3,7 @@ import Select from 'react-select';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useNoteTagsPagination from '../hooks/useNoteTagsPagination';
+import useViewerTagsPagination from '../hooks/useViewerTagsPagination';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const useStyles = makeStyles((theme: Theme ) => createStyles({
@@ -14,17 +15,21 @@ const useStyles = makeStyles((theme: Theme ) => createStyles({
 
 interface Props {
   note: any;
+  viewer: any;
 }
+
+const nodeToOption = ({ node }: any) => ({ value: node.id, label: node.name });
 
 const SelectNoteTags = (props: Props) => {
   const { root } = useStyles();
-  const edges = useNoteTagsPagination(props);
-  const options = edges.map(
-    ({ node }: any) => ({ value: node.id, label: node.name })
-  );
+  const selectedEdges = useNoteTagsPagination(props);
+  const allEdges = useViewerTagsPagination(props);
+  const selected = selectedEdges.map(nodeToOption);
+  const options = allEdges.map(nodeToOption);
   return (
     <Select
       className={root}
+      defaultValue={selected}
       isMulti
       name="tags"
       options={options}
