@@ -1,10 +1,13 @@
+import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTextField from '../hooks/useTextField';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   search: {
@@ -40,18 +43,32 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const HomeSearchField = () => {
   const { search, searchIcon, inputRoot, inputInput } = useStyles();
+  const [value, onChange] = useTextField();
+  const history = useHistory();
+  const performSearch = React.useCallback(() => {
+    history.push(`/notes/${value}`);
+  }, [history, value]);
+  const onKeyDown = React.useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if(e.keyCode === 13) {
+      performSearch();
+    }
+  },[performSearch]);
   return (
     <div className={search}>
-      <div className={searchIcon}>
+      <IconButton
+        aria-label="search notes button"
+        className={searchIcon}
+        onClick={performSearch}
+      >
         <SearchIcon />
-      </div>
+      </IconButton>
       <InputBase
-        placeholder="Search…"
-        classes={{
-          root: inputRoot,
-          input: inputInput,
-        }}
+        classes={{ root: inputRoot, input: inputInput }}
         inputProps={{ 'aria-label': 'search' }}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        placeholder="Search…"
+        value={value}
       />
     </div>
   );
