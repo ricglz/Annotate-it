@@ -2,31 +2,13 @@ import React from 'react';
 import Select from 'react-select';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import useNoteTagsPagination from '../hooks/useNoteTagsPagination';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { graphql } from 'react-relay';
-import { usePagination } from 'relay-hooks';
 
-const fragment = graphql`
-  fragment SelectNoteTags_note on Note
-  @argumentDefinitions (
-    count: {type: "Int", defaultValue: 10}
-    cursor: {type: "String"}
-  ) {
-    id
-    tags(first: $count, after: $cursor)
-    @connection(key: "SelectNoteTags_tags") {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }`;
-
-const useStyles = makeStyles((_: Theme ) => createStyles({
+const useStyles = makeStyles((theme: Theme ) => createStyles({
   root: {
     color: 'black',
+    margin: theme.spacing(2, 0),
   },
 }));
 
@@ -36,10 +18,7 @@ interface Props {
 
 const SelectNoteTags = (props: Props) => {
   const { root } = useStyles();
-  let [note] = usePagination(fragment, props.note);
-  note = note || {};
-  const { tags = {} } = note;
-  const { edges = [] } = tags;
+  const edges = useNoteTagsPagination(props);
   const options = edges.map(
     ({ node }: any) => ({ value: node.id, label: node.name })
   );

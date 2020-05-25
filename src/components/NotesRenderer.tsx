@@ -1,12 +1,13 @@
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
+import NoteTagsList from './NoteTagsList';
 import NotesButtonsRow from './NotesButtonsRow';
 import PencilIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import useDeleteNoteMutation from '../mutations/useDeleteNoteMutation';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
 interface Props {
   note: any
@@ -45,6 +46,7 @@ const NotesRenderer = ({ note }: Props) => {
             Edit
           </Button>
         </Grid>
+        <NoteTagsList note={note} />
       </NotesButtonsRow>
       <ReactMarkdown source={content} />
     </>
