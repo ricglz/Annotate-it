@@ -5,7 +5,12 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-const NotesContent = ({ note }: any) => {
+interface Props {
+  note: any;
+  viewer: any;
+}
+
+const NotesContent = ({ note, viewer }: Props) => {
   const { path } = useRouteMatch();
   return (
     <>
@@ -16,7 +21,7 @@ const NotesContent = ({ note }: any) => {
           <NotesRenderer note={note} />
         </Route>
         <Route path={`${path}/edit`}>
-          <NotesEditor note={note} />
+          <NotesEditor note={note} viewer={viewer}/>
         </Route>
       </Switch>
     </>
