@@ -15,7 +15,7 @@ const query = graphql`
       note(id: $noteId) {
         id
         content
-        ...SelectNoteTags_note
+        ...useNoteTagsPagination_note
       }
     }
   }
