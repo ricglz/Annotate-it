@@ -38,7 +38,7 @@ const useStyles = makeStyles((_: Theme) => createStyles({
     marginTop: '0.5rem',
   },
   root: {
-    width: 240,
+    width: 230,
     flexShrink: 0,
   },
   drawerContainer: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((_: Theme) => createStyles({
     overflow: 'auto',
   },
   paper: {
-    width: 240,
+    width: 230,
   },
 }));
 

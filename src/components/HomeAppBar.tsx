@@ -1,6 +1,7 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
+import HomeSearchField from './HomeSearchField';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import React from 'react';
@@ -21,9 +22,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     maxHeight: 64,
     zIndex: theme.zIndex.drawer + 1,
   },
-  title: {
-    flexGrow: 1,
-  },
 }));
 
 const HomeAppBar = () => {
@@ -34,9 +32,10 @@ const HomeAppBar = () => {
   return (
     <AppBar position="fixed" className={classes.root}>
       <Toolbar>
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6">
           Annotate it!
         </Typography>
+        <HomeSearchField />
         <IconButton
           aria-label="change theme button"
           color="primary"
