@@ -4,13 +4,15 @@ import NotesTextArea from './NotesTextArea';
 import NotesButtonsRow from './NotesButtonsRow';
 import React from 'react';
 import SaveIcon from '@material-ui/icons/Save';
+import SelectNoteTags from './SelectNoteTags';
 import useUpdateNotesContentMutation from '../mutations/useUpdateNotesContentMutation';
 
 interface Props {
-  content: string
+  note: any
 }
 
-const NotesEditor = ({ content }: Props) => {
+const NotesEditor = ({ note }: Props) => {
+  const { content } = note;
   const [onClickEdit, { loading, onChange, text }] = useUpdateNotesContentMutation(content);
   return (
     <>
@@ -26,6 +28,7 @@ const NotesEditor = ({ content }: Props) => {
           </Button>
         </Grid>
       </NotesButtonsRow>
+      <SelectNoteTags note={note} />
       <NotesTextArea value={text} onChange={onChange} />
     </>
   );
