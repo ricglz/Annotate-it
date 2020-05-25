@@ -1,22 +1,21 @@
-import List from '@material-ui/core/List';
 import NoteLink from './NoteLink';
+import List from '@material-ui/core/List';
 import React from 'react';
 import { graphql } from 'react-relay';
 import { usePagination } from 'relay-hooks';
-import { useRouteMatch } from 'react-router-dom';
 
 const fragment = graphql`
-  fragment FolderNotes_folder on Folder
+  fragment SearchNotes_viewer on User
   @argumentDefinitions(
     count: {type: "Int", defaultValue: 10}
     cursor: {type: "String"}
   ) {
-    id
-    notes(first: $count, after: $cursor)
-      @connection(key: "FolderNotes_notes") {
+    notes(first: $count, after: $cursor, query: $query)
+      @connection(key: "SearchNotes_notes") {
       edges {
         node {
           id
+          folderId
           ...NoteLink_node
         }
       }
@@ -24,11 +23,10 @@ const fragment = graphql`
   }
 `
 
-const FolderNotes = (props: any) => {
-  const { url } = useRouteMatch();
-  let [folder] = usePagination(fragment, props.folder)
-  folder = folder || {};
-  const { notes = {} } = folder;
+const SearchNotes = (props: any) => {
+  let [viewer] = usePagination(fragment, props.viewer);
+  viewer = viewer || {};
+  const { notes = {} } = viewer;
   const { edges = [] } = notes;
   return (
     <List>
@@ -36,11 +34,11 @@ const FolderNotes = (props: any) => {
         <NoteLink
           key={node.id}
           node={node}
-          to={`${url}/notes/${node.id}`}
+          to={`/folder/${node.folderId}/notes/${node.id}`}
         />
       ))}
     </List>
   )
 };
 
-export default FolderNotes;
+export default SearchNotes;

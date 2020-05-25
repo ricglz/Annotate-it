@@ -2,6 +2,7 @@ import NotesDetails from './NotesDetails';
 import NotesCreator from './NotesCreator';
 import FolderDetails from './FolderDetails';
 import React from 'react';
+import Search from './Search';
 import Toolbar from '@material-ui/core/Toolbar';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -29,6 +30,9 @@ const HomeMain = () => {
         </Route>
         <Route path="/folder/:folderId">
           <FolderDetails />
+        </Route>
+        <Route exact path="/notes/:query">
+          <Search />
         </Route>
       </Switch>
     </main>
