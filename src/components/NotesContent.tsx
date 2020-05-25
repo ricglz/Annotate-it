@@ -12,10 +12,10 @@ const NotesContent = ({ note }: any) => {
       <Typography variant="h4">Note</Typography>
       <Divider />
       <Route path={`${path}/edit`}>
-        <NotesEditor content={note.content} />
+        <NotesEditor note={note} />
       </Route>
       <Route exact path={path}>
-        <NotesRenderer content={note.content} />
+        <NotesRenderer note={note} />
       </Route>
     </>
   );

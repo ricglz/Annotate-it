@@ -9,10 +9,11 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import useDeleteNoteMutation from '../mutations/useDeleteNoteMutation';
 
 interface Props {
-  content: string
+  note: any
 }
 
-const NotesRenderer = ({ content }: Props) => {
+const NotesRenderer = ({ note }: Props) => {
+  const { content } = note;
   const { url } = useRouteMatch();
   const history = useHistory();
   const [onClickDelete, { loading }] = useDeleteNoteMutation();
