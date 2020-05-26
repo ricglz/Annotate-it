@@ -5,6 +5,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import useNoteTagsPagination from '../hooks/useNoteTagsPagination';
 import useViewerTagsPagination from '../hooks/useViewerTagsPagination';
 import useCreateTagMutation from '../mutations/useCreateTagMutation';
+import useTagNoteMutation from '../mutations/useTagNoteMutation';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const useStyles = makeStyles((theme: Theme ) => createStyles({
@@ -19,19 +20,26 @@ interface Props {
   viewer: any;
 }
 
-const nodeToOption = ({ node }: any) => ({ value: node.id, label: node.name });
+type option = { value: string, label: string };
+
+const nodeToOption = (
+  ({ node }: any): option => ({ value: node.id, label: node.name })
+);
 
 function useSelect(props: Props) {
   const selected = useNoteTagsPagination(props).map(nodeToOption);
   const options = useViewerTagsPagination(props).map(nodeToOption);
   const createTag = useCreateTagMutation();
+  const tagNote = useTagNoteMutation();
   const onChange = React.useCallback((values: any, { action }: any) => {
-    const { label } = values[values.length - 1];
     if(action === 'create-option') {
+      const { label } = values[values.length - 1];
       const variables = { input: { name: label } };
       createTag(variables);
+    } else {
+      tagNote(values.map(({ value }: option) => value));
     }
-  }, [createTag])
+  }, [createTag, tagNote])
   return [selected, options, onChange];
 }
 
