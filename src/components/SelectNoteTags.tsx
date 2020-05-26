@@ -27,19 +27,24 @@ const nodeToOption = (
 );
 
 function useSelect(props: Props) {
+  const initial = useViewerTagsPagination(props).map(nodeToOption);
+  const [options, setOptions] = React.useState(initial);
   const selected = useNoteTagsPagination(props).map(nodeToOption);
-  const options = useViewerTagsPagination(props).map(nodeToOption);
   const createTag = useCreateTagMutation();
   const tagNote = useTagNoteMutation();
-  const onChange = React.useCallback((values: any, { action }: any) => {
+  const onCreate = React.useCallback((newValue: option) => {
+    const { label } = newValue;
+    const variables = { input: { name: label } };
+    setOptions((prev) => [...prev, newValue]);
+    createTag(variables);
+  }, [createTag])
+  const onChange = React.useCallback((values: Array<option>, { action }: any) => {
     if(action === 'create-option') {
-      const { label } = values[values.length - 1];
-      const variables = { input: { name: label } };
-      createTag(variables);
-    } else {
-      tagNote(values.map(({ value }: option) => value));
+      const newValue = values[values.length - 1];
+      onCreate(newValue);
     }
-  }, [createTag, tagNote])
+    tagNote(values.map(({ value }) => value));
+  }, [onCreate, tagNote])
   return [selected, options, onChange];
 }
 
