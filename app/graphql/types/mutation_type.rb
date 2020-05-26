@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :tag_note, mutation: Mutations::TagNote
     field :create_tag, mutation: Mutations::CreateTag
     field :create_note, mutation: Mutations::CreateNote
     field :rename_folder, mutation: Mutations::RenameFolder
