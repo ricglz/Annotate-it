@@ -18,12 +18,20 @@ module Mutations
       tags_token = args[:tags]
       tags = Tag.where(user: viewer)
                 .where('tags.id IN (?) OR tags.name IN (?)',
-                       tags_token, tags_token)
+                       only_uuid(tags_token), tags_token)
       note.tags = tags
       { tags: tags.map { |tag| to_edge(tag, note) } }
     end
 
     private
+
+    def only_uuid(tags)
+      tags.filter { |tag| uuid_regex.match?(tag) }
+    end
+
+    def uuid_regex
+      @uuid_regex ||= /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
+    end
 
     def to_edge(tag, note)
       GraphQL::Relay::RangeAdd.new(
