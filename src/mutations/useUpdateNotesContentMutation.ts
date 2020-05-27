@@ -1,6 +1,7 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import useTextField from '../hooks/useTextField';
-import { graphql } from 'react-relay';
 import { ChangeEvent, useCallback } from 'react';
+import { graphql } from 'react-relay';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from 'relay-hooks';
 
@@ -49,9 +50,10 @@ function useUpdateNotesContentMutation(content: string): callback {
   const {
     noteId, onChange, onCompleted, optimisticResponse, text
   } = useMutationRequisites(content);
+  const onError = useOnErrorMutationAlert();
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, optimisticResponse }
+    mutation, { onCompleted, onError, optimisticResponse }
   );
 
   const onClick = useCallback(() => {

@@ -2,6 +2,7 @@ import {
   ConnectionHandler,
   RecordSourceSelectorProxy
 } from 'relay-runtime';
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import { graphql } from 'react-relay';
 import { useMutation } from 'relay-hooks';
 import { useParams } from 'react-router-dom';
@@ -50,7 +51,8 @@ function useMutationRequisites() {
 
 function useTagNoteMutation() {
   const { noteId, updater } = useMutationRequisites();
-  const [mutate] = useMutation(mutation, { updater });
+  const onError = useOnErrorMutationAlert();
+  const [mutate] = useMutation(mutation, { onError, updater });
   const tagNote = useCallback((tags: Array<string>) => {
     const variables = { input: { noteId, tags } } as any;
     mutate({ variables });

@@ -1,3 +1,4 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import useTextField from '../hooks/useTextField';
 import { ChangeEvent, useCallback, useContext } from 'react';
 import { ConnectionHandler } from 'relay-runtime';
@@ -47,7 +48,7 @@ function useMutationRequisites() {
     const edge = payload.getLinkedRecord('edge')
     sharedUpdater({ store, id, edge});
   }
-  const configs = [{
+  const configs: any = [{
     connectionInfo: [{
       key: 'HomeDrawer_folders',
       rangeBehavior: 'append',
@@ -62,10 +63,11 @@ function useMutationRequisites() {
 
 function useCreateFolderMutation(onCompleted: (e: any) => void): callback {
   const { configs } = useMutationRequisites();
-  const [name, onChange] = useTextField('');
+  const [name, onChange] = useTextField();
+  const onError = useOnErrorMutationAlert();
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, configs: (configs as any) }
+    mutation, { configs, onCompleted, onError }
   );
   const variables = { input: { name } } as Variables;
   const onClick = useCallback(() => {
