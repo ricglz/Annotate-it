@@ -12,5 +12,17 @@ module Mutations
     def viewer
       @viewer ||= context[:viewer]
     end
+
+    def not_found(object)
+      I18n.t('errors.not_found', object.model_name.human.lowercase)
+    end
+
+    def not_part_of_user(object)
+      I18n.t('errors.not_part_of_user', object.model_name.human.lowercase)
+    end
+
+    def object_errors(object)
+      object.errors.full_messages.to_sentence
+    end
   end
 end

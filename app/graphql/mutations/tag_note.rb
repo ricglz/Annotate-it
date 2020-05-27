@@ -8,12 +8,10 @@ module Mutations
     argument :tags, [String], required: true
 
     def resolve(**args)
-      raise GraphQL::ExecutionError, "This viewer doesn't exist" unless viewer
+      raise GraphQL::ExecutionError, not_found(viewer) unless viewer
 
       note = viewer.notes.find(args[:note_id])
-      unless note
-        raise GraphQL::ExecutionError, "This note doesn't belong to the viewer"
-      end
+      raise GraphQL::ExecutionError, not_part_of_user(note) unless note
 
       tags_token = args[:tags]
       tags = Tag.where(user: viewer)

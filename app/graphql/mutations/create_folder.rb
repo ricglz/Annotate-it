@@ -7,13 +7,10 @@ module Mutations
     argument :name, String, required: true
 
     def resolve(arguments)
-      raise GraphQL::ExecutionError, "This viewer doesn't exist" unless viewer
+      raise GraphQL::ExecutionError, not_found(viewer) unless viewer
 
       folder = Folder.new(name: arguments[:name], user: viewer)
-      unless folder.save
-        raise GraphQL::ExecutionError,
-              "This folder doesn't belong to the viewer"
-      end
+      raise GraphQL::ExecutionError, object_errors(folder) unless folder.save
 
       range_add = GraphQL::Relay::RangeAdd.new(
         parent: viewer, collection: viewer.folders, item: folder,

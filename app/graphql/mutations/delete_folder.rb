@@ -7,13 +7,10 @@ module Mutations
     argument :folder_id, ID, required: true
 
     def resolve(arguments)
-      raise GraphQL::ExecutionError, "This viewer doesn't exist" unless viewer
+      raise GraphQL::ExecutionError, not_found(viewer) unless viewer
 
       folder = viewer.folders.find(arguments[:folder_id])
-      unless folder
-        raise GraphQL::ExecutionError,
-              "This folder doesn't belong to the viewer"
-      end
+      raise GraphQL::ExecutionError, not_part_of_user(folder) unless folder
 
       folder.delete
       { deleted_folder_id: folder.id }
