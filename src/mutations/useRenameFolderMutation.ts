@@ -1,3 +1,4 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import useTextField from '../hooks/useTextField';
 import { graphql } from 'react-relay';
 import { ChangeEvent, useCallback } from 'react';
@@ -46,9 +47,10 @@ function useRenameFolderMutation(
   folder: Folder, onCompleted: (e: any) => void
 ): callback {
   const { name, onChange, optimisticResponse } = useMutationRequisites(folder);
+  const onError = useOnErrorMutationAlert();
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, optimisticResponse }
+    mutation, { onCompleted, onError, optimisticResponse }
   );
 
   const onClick = useCallback(() => {

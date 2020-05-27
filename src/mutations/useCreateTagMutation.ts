@@ -1,3 +1,4 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
 import { useCallback, useContext } from 'react';
@@ -19,7 +20,7 @@ const mutation = graphql`
 function useMutationRequisites() {
   const { user } = useContext(UserContext);
   const { id } = user as any;
-  const configs = [{
+  const configs: any = [{
     connectionInfo: [{
       key: 'useViewerTagsPagination_tags',
       rangeBehavior: 'append'
@@ -34,7 +35,8 @@ function useMutationRequisites() {
 
 function useCreateNoteMutation() {
   const { configs } = useMutationRequisites();
-  const [mutate] = useMutation(mutation, { configs: (configs as any) });
+  const onError = useOnErrorMutationAlert();
+  const [mutate] = useMutation(mutation, { configs, onError });
   const onCreateOption = useCallback((variables: Variables) => {
     mutate({ variables });
   }, [mutate]);

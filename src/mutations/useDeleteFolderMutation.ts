@@ -1,3 +1,4 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import { UserContext } from '../contexts/UserContext';
 import { graphql } from 'react-relay';
 import { useCallback, useContext  } from 'react';
@@ -27,7 +28,7 @@ function useMutationRequisites() {
     history.push(`/`);
   }, [history]);
   const optimisticResponse = { deleteFolder: { deletedFolderId: folderId } };
-  const configs = [{
+  const configs: any = [{
     connectionKeys: [{ key: 'HomeDrawer_folders' }],
     deletedIDFieldName: 'deletedFolderId',
     parentID: id,
@@ -42,9 +43,10 @@ function useDeleteFolderMutation(): callback {
   const {
     folderId, onCompleted, optimisticResponse, configs
   } = useMutationRequisites();
+  const onError = useOnErrorMutationAlert();
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, optimisticResponse, configs: (configs as any) }
+    mutation, { configs, onCompleted, onError, optimisticResponse }
   );
   const onClick = useCallback(() => {
     mutate({ variables: { input: { folderId } } })

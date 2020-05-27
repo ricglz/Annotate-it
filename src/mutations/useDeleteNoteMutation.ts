@@ -1,3 +1,4 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import { graphql } from 'react-relay';
 import { useCallback  } from 'react';
 import { useDeleteNoteMutationVariables as Variables } from './__generated__/useDeleteNoteMutation.graphql';
@@ -26,7 +27,7 @@ function useMutationRequisites() {
     history.push(`/folder/${folderId}`);
   }, [folderId, history]);
   const optimisticResponse = { deleteNote: { deletedNoteId: noteId } };
-  const configs = [{
+  const configs: any = [{
     connectionKeys: [{ key: 'FolderNotes_notes' }],
     deletedIDFieldName: 'deletedNoteId',
     parentID: folderId,
@@ -39,9 +40,10 @@ function useMutationRequisites() {
 
 function useDeleteNoteMutation(): callback {
   const { noteId, onCompleted, optimisticResponse, configs } = useMutationRequisites();
+  const onError = useOnErrorMutationAlert();
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, optimisticResponse, configs: (configs as any) }
+    mutation, { configs, onCompleted, onError, optimisticResponse }
   );
   const variables = { input: { noteId } } as Variables;
   const onClick = useCallback(() => {

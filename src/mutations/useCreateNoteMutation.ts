@@ -1,3 +1,4 @@
+import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import useTextField from '../hooks/useTextField';
 import { ChangeEvent, useCallback } from 'react';
 import { graphql } from 'react-relay';
@@ -32,7 +33,7 @@ function useMutationRequisites() {
   const onCompleted = useCallback(() => {
     history.push(`/folder/${folderId}`);
   }, [folderId, history]);
-  const configs = [{
+  const configs: any = [{
     connectionInfo: [{
       key: 'FolderNotes_notes',
       rangeBehavior: 'prepend'
@@ -47,10 +48,11 @@ function useMutationRequisites() {
 
 function useCreateNoteMutation(): callback {
   const { folderId, onCompleted, configs } = useMutationRequisites();
-  const [content, onChange] = useTextField('');
+  const [content, onChange] = useTextField();
+  const onError = useOnErrorMutationAlert();
 
   const [mutate, { loading }] = useMutation(
-    mutation, { onCompleted, configs: (configs as any) }
+    mutation, { configs, onCompleted, onError }
   );
   const variables = { input: { folderId, content } } as Variables;
   const onClick = useCallback(() => {
