@@ -1,9 +1,16 @@
 import Divider from '@material-ui/core/Divider';
-import NotesEditor from './NotesEditor';
-import NotesRenderer from './NotesRenderer';
+import Loader from './Loader';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import loadable from "@loadable/component";
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+
+const NotesEditor = loadable(() => import('./NotesEditor'), {
+  fallback: <Loader />
+});
+const NotesRenderer = loadable(() => import('./NotesRenderer'), {
+  fallback: <Loader />
+});
 
 interface Props {
   note: any;
