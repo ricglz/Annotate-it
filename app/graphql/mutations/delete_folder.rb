@@ -9,11 +9,12 @@ module Mutations
     def resolve(arguments)
       raise GraphQL::ExecutionError, not_found(viewer) unless viewer
 
-      folder = viewer.folders.find(arguments[:folder_id])
+      id = arguments[:folder_id]
+      folder = viewer.folders.find(id)
       raise GraphQL::ExecutionError, not_part_of_user(folder) unless folder
 
-      folder.delete
-      { deleted_folder_id: folder.id }
+      folder.really_destroy!
+      { deleted_folder_id: id }
     end
   end
 end
