@@ -19,7 +19,7 @@ const Content = () => (
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/about-us">
+      <Route exact path="/about-us">
         <AboutUs />
       </Route>
       <Route path="/">

@@ -21,12 +21,11 @@ const query = graphql`
 function Home() {
   const { user } = React.useContext(UserContext);
   const history = useHistory();
-  if(!(user as any).email) {
-    history.push('/login');
-  }
   const { props, error } = useQuery(query, {  });
-
   if(props) {
+    if(!(user as any).email || !props.viewer) {
+      history.push('/login');
+    }
     return <HomeContent viewer={props.viewer} />
   }
   if(error) {

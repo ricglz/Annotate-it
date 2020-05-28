@@ -1,5 +1,4 @@
 import environment from '../config/relay-env';
-import useOnErrorMutationAlert from '../hooks/useOnErrorMutationAlert';
 import { LogInMutationVariables } from './__generated__/LogInMutation.graphql';
 import { commitMutation, graphql } from 'react-relay';
 
@@ -18,7 +17,6 @@ const mutation = graphql`
 export default function LogInMutation(
   variables: LogInMutationVariables, callback: () => void
 ) {
-  const onError = useOnErrorMutationAlert();
   const onCompleted = ({ loginMutation }: any) => {
     const { token } = loginMutation;
     if(token) {
@@ -27,5 +25,5 @@ export default function LogInMutation(
     }
   }
 
-  commitMutation(environment, { mutation, onCompleted, onError, variables });
+  commitMutation(environment, { mutation, onCompleted, variables });
 };
