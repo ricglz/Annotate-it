@@ -1,0 +1,4 @@
+en:
+  errors:
+    not_found: "This %{model} doesn't exist"
+    not_part_of_user: "This %{model} doesn't belong to the user"
